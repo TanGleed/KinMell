@@ -1,13 +1,17 @@
 import 'package:app/providers/user.provider.dart';
+import 'package:app/utils/user_preference.dart';
 import 'package:app/views/auth/screens/register.dart';
 import 'package:app/views/auth/services/auth.services.dart';
+import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/globalvariable.dart';
 import 'router.dart';
 
-void main() {
+Future <void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserPreferance.init();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
@@ -51,7 +55,7 @@ class _MyAppState extends State<MyApp> {
       // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
       //     ? const LoginPage()
       //     : const SignupPage(),
-      home: const RegisterPage(),
+      home: const HomePage(),
     );
   }
 }

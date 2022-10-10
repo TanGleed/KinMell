@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 class ProfileWidget extends StatelessWidget {
   final String imgPath;
   final VoidCallback onClicked;
+  final bool isEdit;
   const ProfileWidget({Key? key,
    required this.imgPath,
+   this.isEdit=false,
    required this.onClicked})
    : super(key: key);
 
@@ -28,16 +30,19 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage(){
-    final image= AssetImage('assets/images/Old Sterio.jpeg');
+    final image= imgPath.contains('assets/')
+    ?AssetImage(imgPath):
+    FileImage(File(imgPath));
+    
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: image,
+          image: image as ImageProvider,
           fit: BoxFit.cover,
           width: 110,
           height: 110,
-          child: InkWell(onTap: onClicked),
+          child: GestureDetector(onTap: onClicked),
         ),
       ),
     );
@@ -50,7 +55,7 @@ class ProfileWidget extends StatelessWidget {
       color: color,
       all: 8,
       child: Icon(
-      Icons.edit,
+      isEdit?Icons.add_a_photo:Icons.edit,
       
       size: 20,
     ),
