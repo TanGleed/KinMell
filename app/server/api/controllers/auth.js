@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
-exports.user_signup = (req, res, next) => {
-  User.find({ email: req.body.email })
+exports.user_signup = async (req, res, next) => {
+  await User.find({ email: req.body.email })
     .exec()
     .then((user) => {
       if (user.length >= 1) {
@@ -46,8 +46,8 @@ exports.user_signup = (req, res, next) => {
     });
 };
 
-exports.user_login = (req, res, next) => {
-  User.find({ email: req.body.email })
+exports.user_login = async (req, res, next) => {
+  await User.find({ email: req.body.email })
     .exec()
     .then((user) => {
       if (user.length < 1) {
@@ -75,6 +75,7 @@ exports.user_login = (req, res, next) => {
           return res.status(200).json({
             message: "Auth successful",
             token: token,
+            user,
           });
         }
         res.status(401).json({
@@ -90,8 +91,8 @@ exports.user_login = (req, res, next) => {
     });
 };
 
-exports.user_delete = (req, res, next) => {
-  User.remove({ _id: req.params.userId })
+exports.user_delete = async (req, res, next) => {
+  await User.remove({ _id: req.params.userId })
     .exec()
     .then((result) => {
       res.status(200).json({

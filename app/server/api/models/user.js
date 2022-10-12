@@ -52,7 +52,7 @@ const userSchema = mongoose.Schema(
       transform: (doc, ret) => {
         ret.userId = ret._id.toString();
         delete ret._id;
-        delete ret._v;
+        delete ret.__v;
         delete ret.password;
       },
     },
