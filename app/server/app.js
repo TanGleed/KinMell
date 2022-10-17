@@ -9,11 +9,11 @@ const unless = require("express-unless");
 // importing local modules
 //const userRoutes = require("./api/routes/user");
 const authRoutes = require("./api/routes/auth");
-const auth = require("./api/middleware/auth");
+const categoryRoutes = require("./api/routes/category");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const host = "192.168.1.65";
+const host = "192.168.1.64";
 
 require("dotenv").config();
 
@@ -41,19 +41,11 @@ app.use(bodyParser.json());
 // middleware
 app.use(express.json());
 app.use(cors());
-//auth.authenticateToken.unless = unless;
-
-// app.use(
-//   auth.authenticateToken.unless({
-//     path: [
-//       { url: "/auth/login", methods: ["POST"] },
-//       { url: "/auth/signup", methods: ["POST"] },
-//     ],
-//   })
-// );
+app.use("../uploads", express.static("uploads"));
 
 //Routes for handling requests
 app.use("/api/auth", authRoutes);
+app.use("/api/category", categoryRoutes);
 
 //error handling middleware
 app.use((req, res, next) => {

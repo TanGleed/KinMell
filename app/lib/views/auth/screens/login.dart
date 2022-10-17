@@ -1,4 +1,5 @@
 import 'package:app/api/api_service.dart';
+import 'package:app/models/login_request_model.dart';
 import 'package:app/views/auth/screens/register.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/gestures.dart';
@@ -171,39 +172,22 @@ class _LoginPageState extends State<LoginPage> {
                 setState(() {
                   isAsynCallProcess = true;
                 });
-                APIService.loginUser(email!, password!).then(
-                  (res) {
-                    setState(
-                      () {
-                        isAsynCallProcess = false;
-                      },
-                    );
 
-                    if (res) {
-                      FormHelper.showSimpleAlertDialog(
-                        context,
-                        Config.appName,
-                        "User Logged-In Successfully",
-                        "Ok",
-                        () {
-                          Navigator.of(context).pop();
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            HomePage.routeName,
-                            (route) => false,
-                          );
-                        },
-                      );
+                LoginRequestModel model = LoginRequestModel(
+                  email: email!,
+                  password: password!,
+                );
+
+                APIService.login(model).then(
+                  (response) {
+                    if (response!) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/home', (route) => false);
                     } else {
-                      FormHelper.showSimpleAlertDialog(
-                        context,
-                        Config.appName,
-                        "Invalid Email/Password",
-                        "Ok",
-                        () {
-                          Navigator.of(context).pop();
-                        },
-                      );
+                      FormHelper.showSimpleAlertDialog(context, Config.appName,
+                          "Invalid email/password", 'OK', () {
+                        Navigator.pop(context);
+                      });
                     }
                   },
                 );

@@ -1,5 +1,7 @@
 import 'package:app/providers/user.provider.dart';
+import 'package:app/utils/shared_service.dart';
 import 'package:app/utils/user_preference.dart';
+import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/auth/screens/register.dart';
 import 'package:app/views/auth/services/auth.services.dart';
 import 'package:app/views/home/screens/homepage.dart';
@@ -9,14 +11,17 @@ import 'package:provider/provider.dart';
 import 'constants/globalvariable.dart';
 import 'router.dart';
 
-Future <void> main() async{
+Widget _defaultHome = const LoginPage();
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await UserPreferance.init();
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => UserProvider(),
-    ),
-  ], child: MyApp()));
+
+  bool _result = await SharedService.isLoggedIn();
+  if (_result) {
+    _defaultHome = const HomePage();
+  }
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -55,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
       //     ? const LoginPage()
       //     : const SignupPage(),
-      home: const HomePage(),
+      home: _defaultHome,
     );
   }
 }
