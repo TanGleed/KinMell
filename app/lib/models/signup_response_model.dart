@@ -1,30 +1,27 @@
 import 'dart:convert';
 
-LoginResponseModel loginResponseJson(String str) => LoginResponseModel.fromJson(
+SignupResponseModel signupResponseJson(String str) =>
+    SignupResponseModel.fromJson(
       json.decode(str),
     );
 
-class LoginResponseModel {
-  LoginResponseModel({
+class SignupResponseModel {
+  SignupResponseModel({
     required this.message,
-    required this.token,
     required this.user,
   });
   late final String message;
-  late final String token;
-  late final List<User> user;
+  late final User? user;
 
-  LoginResponseModel.fromJson(Map<String, dynamic> json) {
+  SignupResponseModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    token = json['token'];
-    user = List.from(json['user']).map((e) => User.fromJson(e)).toList();
+    user = (json['user'] != null ? User.fromJson(json['user']) : null);
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['message'] = message;
-    _data['token'] = token;
-    _data['user'] = user.map((e) => e.toJson()).toList();
+    _data['user'] = user!.toJson();
     return _data;
   }
 }

@@ -6,6 +6,8 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:app/config/config.dart';
 
+import '../../../models/signup_request_model.dart';
+
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/register-screen';
   const RegisterPage({Key? key}) : super(key: key);
@@ -244,41 +246,35 @@ class _RegisterPageState extends State<RegisterPage> {
             child: FormHelper.submitButton(
               "Sign Up",
               () {
-                if (validateSave()) {
-                  // API request
+                if (validateAndSave()) {
+                  // API
                   setState(() {
                     isAsyncCallProcess = true;
                   });
 
-                  APIService.registerUser(name!, email!, password!).then(
+                  SignupRequestModel model = SignupRequestModel(
+                    name: name!,
+                    email: email!,
+                    password: password!,
+                  );
+
+                  APIService.signup(model).then(
                     (response) {
-                      setState(
-                        () {
-                          isAsyncCallProcess = false;
-                        },
-                      );
-                      if (response) {
+                      if (response.user != null) {
                         FormHelper.showSimpleAlertDialog(
                             context,
                             Config.appName,
-                            "Registration Completed successfully",
-                            "Ok", () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            LoginPage.routeName,
-                            (route) => false,
-                          );
+                            "Registration Successful",
+                            'OK', () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/login', (route) => false);
                         });
                       } else {
                         FormHelper.showSimpleAlertDialog(
-                          context,
-                          Config.appName,
-                          "This email already exists",
-                          "Ok",
-                          () {
-                            Navigator.of(context).pop();
-                          },
-                        );
+                            context, Config.appName, response.message, 'OK',
+                            () {
+                          Navigator.pop(context);
+                        });
                       }
                     },
                   );
@@ -325,7 +321,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  bool validateSave() {
+  bool validateAndSave() {
     final form = globalKey.currentState;
 
     if (form!.validate()) {
