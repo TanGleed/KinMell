@@ -13,7 +13,7 @@ const categoryRoutes = require("./api/routes/category");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const host = "192.168.1.64";
+const host = "192.168.18.10";
 
 require("dotenv").config();
 

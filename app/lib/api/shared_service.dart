@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:app/models/login_response.dart';
-import 'package:app/views/auth/services/auth.services.dart';
 import 'package:flutter/cupertino.dart';
 
 class SharedService {

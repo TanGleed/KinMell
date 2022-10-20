@@ -1,12 +1,7 @@
-import 'package:app/providers/user.provider.dart';
 import 'package:app/utils/shared_service.dart';
-import 'package:app/utils/user_preference.dart';
 import 'package:app/views/auth/screens/login.dart';
-import 'package:app/views/auth/screens/register.dart';
-import 'package:app/views/auth/services/auth.services.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'constants/globalvariable.dart';
 import 'router.dart';
@@ -32,11 +27,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final AuthService authService = AuthService();
   @override
   void initstate() {
     super.initState();
-    authService.getUserData(context);
   }
 
   @override
@@ -57,9 +50,6 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-      //     ? const LoginPage()
-      //     : const SignupPage(),
       home: _defaultHome,
     );
   }
