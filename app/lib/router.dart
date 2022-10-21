@@ -1,3 +1,4 @@
+import 'package:app/views/auth/screens/forgotpassword.dart';
 import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/auth/screens/register.dart';
 import 'package:app/views/home/screens/homepage.dart';
@@ -39,6 +40,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         builder: (_) => const UploadPage(),
         settings: routeSettings,
       );
+    case ForgotPasswordScreen.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const ForgotPasswordScreen(),
+          settings: routeSettings);
     default:
       return MaterialPageRoute(
         settings: routeSettings,

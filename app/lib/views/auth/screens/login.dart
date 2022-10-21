@@ -165,6 +165,17 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 10,
           ),
+          Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.65),
+            child: GestureDetector(
+                onTap: (() =>
+                    Navigator.pushNamed(context, '/forgotpassword-screen')),
+                child: const Text(
+                  'Forgot Password?',
+                  style: TextStyle(decoration: TextDecoration.underline),
+                )),
+          ),
           Center(
             child: FormHelper.submitButton("Login", () {
               if (validateAndSave()) {
@@ -182,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                   (response) {
                     if (response!) {
                       Navigator.pushNamedAndRemoveUntil(
-                          context, '/home', (route) => false);
+                          context, '/homepage-screen', (route) => false);
                     } else {
                       FormHelper.showSimpleAlertDialog(context, Config.appName,
                           "Invalid email/password", 'OK', () {
