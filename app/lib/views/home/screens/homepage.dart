@@ -2,6 +2,7 @@ import 'package:app/common/widgets/custom_GNav.dart';
 import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/userProfile.dart';
+import 'package:app/views/home/widgets/widget_home_categories.dart';
 import 'package:app/views/upload/screens/uploadPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,13 +39,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
 
-      body: const PostCard(
-        username: 'username',
-        profile_img: 'assets/images/kinmell_2.png',
-        product_img: 'assets/images/Old Sterio.jpeg',
-        price: 'Price',
-        description: 'Here goes some description of the product',
+      body: ListView(
+        children: const [HomeCategoriesWidget()],
       ),
+
+      // body: const PostCard(
+      //   username: 'username',
+      //   profile_img: 'assets/images/kinmell_2.png',
+      //   product_img: 'assets/images/Old Sterio.jpeg',
+      //   price: 'Price',
+      //   description: 'Here goes some description of the product',
+      // ),
 
       // This is the bottom navigation bar
       bottomNavigationBar: const CustomGNavBar(),

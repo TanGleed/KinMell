@@ -2,7 +2,7 @@ import 'package:app/utils/shared_service.dart';
 import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'constants/globalvariable.dart';
 import 'router.dart';
 
@@ -16,7 +16,11 @@ void main() async {
     _defaultHome = const HomePage();
   }
 
-  runApp(MyApp());
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

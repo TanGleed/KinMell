@@ -6,7 +6,7 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:app/config/config.dart';
 
-import '../../../models/signup_request_model.dart';
+import '../../../models/auth/signup_request_model.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/register-screen';
