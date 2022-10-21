@@ -2,8 +2,6 @@ import 'package:app/constants/globalvariable.dart';
 import 'package:app/views/upload/widgets/inputtextField.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/widgets/custom_TextField.dart';
-
 class Step2 extends StatefulWidget {
   final String? location;
   final String? landMark;

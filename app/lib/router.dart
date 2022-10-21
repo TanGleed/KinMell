@@ -1,6 +1,9 @@
+import 'package:app/constants/globalvariable.dart';
 import 'package:app/views/auth/screens/forgotpassword.dart';
 import 'package:app/views/auth/screens/login.dart';
+import 'package:app/views/auth/screens/otpscreen.dart';
 import 'package:app/views/auth/screens/register.dart';
+import 'package:app/views/auth/screens/resetPassword.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/searchpage.dart';
@@ -42,8 +45,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       );
     case ForgotPasswordScreen.routeName:
       return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(),
+          builder: (_) => const ForgotPasswordScreen(
+                isValidEmail: false,
+              ),
           settings: routeSettings);
+    case ResetPassword.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const ResetPassword(), settings: routeSettings);
+
     default:
       return MaterialPageRoute(
         settings: routeSettings,

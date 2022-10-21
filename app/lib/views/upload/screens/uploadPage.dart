@@ -23,10 +23,10 @@ class _UploadPageState extends State<UploadPage> {
   int currentStep = 0;
 
 //Step1
-  final String? productName = '';
-  String? productStatus = '';
-  String? productCategories = '';
-  String? productDescription = '';
+  String? productName;
+  String? productStatus;
+  String? productCategories;
+  String? productDescription;
 //Step2
   String? location = '';
   String? landMark = '';
@@ -87,6 +87,7 @@ class _UploadPageState extends State<UploadPage> {
       );
     } else if (validate()) {
       setState(() {
+        print(productName);
         currentStep += 1;
       });
     } else {
@@ -109,7 +110,7 @@ class _UploadPageState extends State<UploadPage> {
             productCondition: productCondition,
             productCategories: productCategories,
             productDescription: productDescription,
-            productName: productName,
+            productName: this.productName,
             productStatus: productStatus,
           )),
       Step(
@@ -195,7 +196,9 @@ class _UploadPageState extends State<UploadPage> {
   bool validate() {
     switch (currentStep) {
       case 0:
-        if (step1FormKey.currentState!.validate()) {
+        final form = step1FormKey.currentState;
+        if (form!.validate()) {
+          form.save();
           return true;
         } else {
           return false;

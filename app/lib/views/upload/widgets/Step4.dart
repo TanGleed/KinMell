@@ -1,7 +1,6 @@
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/views/upload/widgets/inputtextField.dart';
 import 'package:flutter/material.dart';
-import '../../../common/widgets/custom_TextField.dart';
 
 class Step4 extends StatelessWidget {
   final String? productName;
