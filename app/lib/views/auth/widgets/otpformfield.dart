@@ -99,7 +99,7 @@ class _OTPFormState extends State<OTPForm> {
       width: getProportionateScreenWidth(60),
       child: TextFormField(
         focusNode: pinFocusNode,
-        autofocus: true,
+        autofocus: false,
         style: const TextStyle(fontSize: 24),
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
