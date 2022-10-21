@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app/models/User-Profile.dart';
+import 'package:app/models/user/User-Profile.dart';
 import 'package:app/utils/user_preference.dart';
 import 'package:app/views/home/widgets/appbar_widgets.dart';
 import 'package:app/views/home/widgets/profile_widget.dart';

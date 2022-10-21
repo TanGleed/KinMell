@@ -1,13 +1,9 @@
-import 'package:app/providers/user.provider.dart';
 import 'package:app/utils/shared_service.dart';
-import 'package:app/utils/user_preference.dart';
 import 'package:app/views/auth/screens/login.dart';
-import 'package:app/views/auth/screens/register.dart';
 import 'package:app/views/auth/services/auth.services.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'constants/globalvariable.dart';
 import 'router.dart';
 
@@ -21,7 +17,11 @@ void main() async {
     _defaultHome = const HomePage();
   }
 
-  runApp(MyApp());
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

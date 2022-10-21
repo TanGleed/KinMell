@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../../constants/errorhandle.dart';
 import '../../../constants/globalvariable.dart';
 import '../../../constants/utils.dart';
-import '../../../models/user.dart';
+import '../../../models/user/user.dart';
 import '../../../providers/user.provider.dart';
 import '../screens/login.dart';
 

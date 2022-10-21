@@ -1,23 +1,23 @@
-
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/User-Profile.dart';
+import '../models/user/User-Profile.dart';
 
-class UserPreferance{
+class UserPreferance {
   static late SharedPreferences _preferences;
-  static const _keyUser= 'user';
-  static const myUser =User_Profile(
-    imgPath:'assets/images/Old Sterio.jpeg',
+  static const _keyUser = 'user';
+  static const myUser = User_Profile(
+    imgPath: 'assets/images/Old Sterio.jpeg',
     name: 'Prabesh',
     email: 'prabesht09@gmail.com',
-    about: 'Here goes some description of the user. Like location, phone number whatever that helps the buyer connect with the user.',
+    about:
+        'Here goes some description of the user. Like location, phone number whatever that helps the buyer connect with the user.',
     isDarkMode: false,
   );
 
-  static Future init() async=>
-  _preferences= await SharedPreferences.getInstance();
+  static Future init() async =>
+      _preferences = await SharedPreferences.getInstance();
 
   static Future setUser(User_Profile user) async {
     final json = jsonEncode(user.toJson());
@@ -25,10 +25,9 @@ class UserPreferance{
     await _preferences.setString(_keyUser, json);
   }
 
-  static User_Profile getUser(){
-    final json =_preferences.getString(_keyUser);
+  static User_Profile getUser() {
+    final json = _preferences.getString(_keyUser);
 
-    return json==null? myUser : User_Profile.fromJson(jsonDecode(json));
+    return json == null ? myUser : User_Profile.fromJson(jsonDecode(json));
   }
 }
-

@@ -1,5 +1,5 @@
 import 'package:app/api/api_service.dart';
-import 'package:app/models/login_request_model.dart';
+import 'package:app/models/auth/login_request_model.dart';
 import 'package:app/views/auth/screens/register.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/gestures.dart';
