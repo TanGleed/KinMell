@@ -1,8 +1,13 @@
+import 'package:app/config/config.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/utils/keyboard.dart';
+import 'package:app/views/auth/screens/forgotpassword.dart';
+import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/auth/widgets/otpformfield.dart';
-import 'package:app/views/auth/widgets/timeDisplay.dart';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
 
 class OtpScreen extends StatefulWidget {
   static const String routeName = '/otp-screen';
@@ -18,6 +23,7 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   static bool showResendOTP = false;
+  static bool isTimerRunning = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +32,7 @@ class _OtpScreenState extends State<OtpScreen> {
           height: GlobalVariables.screenHeight * 0.05,
         ),
         Text(
-          "Enter OTP",
+          "OTP Verification",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(28),
             fontWeight: FontWeight.bold,
@@ -34,21 +40,58 @@ class _OtpScreenState extends State<OtpScreen> {
             height: 1.5,
           ),
         ),
-        Text(
-          "OTP sent to ${widget.email} check inbox/spam folder ",
+        RichText(
           textAlign: TextAlign.center,
+          text: TextSpan(
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+            ),
+            children: <TextSpan>[
+              const TextSpan(text: "OTP sent to "),
+              TextSpan(
+                text: widget.email,
+                style: const TextStyle(
+                  color: Colors.purple,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const TextSpan(
+                text: " check inbox/spam folder",
+              ),
+            ],
+          ),
         ),
-        showtime(),
+        SizedBox(
+          height: GlobalVariables.screenHeight * 0.05,
+        ),
+        isTimerRunning ? showtime() : Container(),
         const OTPForm(),
         SizedBox(
           height: GlobalVariables.screenHeight * 0.1,
         ),
         showResendOTP
-            ? GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  'Resend OTP',
-                  style: TextStyle(decoration: TextDecoration.underline),
+            ? RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: "Resend OTP?",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            setState(() {
+                              showResendOTP = false;
+                              isTimerRunning = true;
+                            });
+                          }),
+                  ],
                 ),
               )
             : Container(),
@@ -64,16 +107,17 @@ class _OtpScreenState extends State<OtpScreen> {
         const Text('Resend OTP in '),
         TweenAnimationBuilder(
             tween: Tween(
-              begin: 60.0,
+              begin: 30.0,
               end: 0.0,
             ),
             onEnd: () {
               setState(() {
                 showResendOTP = true;
                 KeyboardUtil.hideKeyboard(context);
+                isTimerRunning = false;
               });
             },
-            duration: const Duration(seconds: 60),
+            duration: const Duration(seconds: 30),
             builder: (_, dynamic value, child) => Text("00:${value.toInt()}"))
       ],
     );
