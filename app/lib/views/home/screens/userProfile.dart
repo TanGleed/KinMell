@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../../../models/User-Profile.dart';
+import '../../../models/user/User-Profile.dart';
 import '../widgets/profile_widget.dart';
 
 class UserProfile extends StatefulWidget {
@@ -18,7 +18,7 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
-    final user= UserPreferance.getUser();
+    final user = UserPreferance.getUser();
     return Scaffold(
       appBar: buildAppBar(context),
       body: ListView(
@@ -27,56 +27,51 @@ class _UserProfileState extends State<UserProfile> {
           ProfileWidget(
             imgPath: user.imgPath,
             onClicked: () async {
-              await
-              Navigator.of(context).push(
+              await Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => EditProfilePage()),
               );
-              setState(() {
-                
-              });
+              setState(() {});
             },
           ),
           const SizedBox(height: 24),
           buildName(user),
-          const SizedBox(height:48),
+          const SizedBox(height: 48),
           buildAbout(user),
         ],
-        ),
+      ),
     );
   }
 }
 
-Widget buildName(User_Profile user)=>Column(
-
-  children: [
-
-    Text(user.name,
-
-    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-
-    ),
-
-    const SizedBox(height:4),
-
-    Text(user.email,
-
-    style: TextStyle(fontSize:16),
-
-    ),
-
-  ],);
-
-  Widget buildAbout(User_Profile user)=>Container(
-    padding: EdgeInsets.symmetric(horizontal:48),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+Widget buildName(User_Profile user) => Column(
       children: [
         Text(
-          'About',
-          style:TextStyle(fontSize:24,fontWeight: FontWeight.bold, height:1.5),),
-          const SizedBox(height:16),
-          Text(user.about,// this data is taken from util/user_preference
-          style: TextStyle(fontSize:16,height:1.4),)
+          user.name,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          user.email,
+          style: TextStyle(fontSize: 16),
+        ),
       ],
-    ),
-  );
+    );
+
+Widget buildAbout(User_Profile user) => Container(
+      padding: EdgeInsets.symmetric(horizontal: 48),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'About',
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, height: 1.5),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            user.about, // this data is taken from util/user_preference
+            style: TextStyle(fontSize: 16, height: 1.4),
+          )
+        ],
+      ),
+    );

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
-import 'package:app/models/login_response.dart';
+import 'package:app/models/auth/login_response.dart';
 
 class SharedService {
   static const String KEY_NAME = "login_key";
