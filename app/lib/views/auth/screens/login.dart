@@ -1,8 +1,6 @@
-import 'package:app/api/api_service.dart';
 import 'package:app/models/auth/login_request_model.dart';
-import 'package:app/views/auth/screens/register.dart';
-import 'package:app/views/home/screens/homepage.dart';
-import 'package:flutter/gestures.dart';
+import 'package:app/views/auth/services/authservices.dart';
+import 'package:app/views/auth/widgets/backtopSignupButton.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
@@ -189,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                   password: password!,
                 );
 
-                APIService.login(model).then(
+                AuthServices.login(model).then(
                   (response) {
                     if (response!) {
                       Navigator.pushNamedAndRemoveUntil(
@@ -212,32 +210,7 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 10,
           ),
-          Center(
-            child: RichText(
-              text: TextSpan(
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                ),
-                children: <TextSpan>[
-                  const TextSpan(text: "Don't have an account? "),
-                  TextSpan(
-                      text: "SignUp",
-                      style: const TextStyle(
-                        color: Colors.purple,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            RegisterPage.routeName,
-                            (route) => false,
-                          );
-                        }),
-                ],
-              ),
-            ),
-          ),
+          backtoSignupButton(context),
         ],
       ),
     );

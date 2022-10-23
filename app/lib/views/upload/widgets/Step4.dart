@@ -1,19 +1,19 @@
+import 'package:app/constants/globalvariable.dart';
+import 'package:app/views/upload/widgets/inputtextField.dart';
 import 'package:flutter/material.dart';
-import '../../../common/widgets/custom_TextField.dart';
 
 class Step4 extends StatelessWidget {
-  final TextEditingController productName;
-  final String error;
-  final TextEditingController landmark;
-  final TextEditingController contactNumber;
-  final TextEditingController location;
-  final TextEditingController productPrice;
+  final String? productName;
+
+  final String? landMark;
+  final String? contactNumber;
+  final String? location;
+  final String? productPrice;
   final GlobalKey<FormState> step4FormKey;
   const Step4({
     Key? key,
     required this.contactNumber,
-    required this.error,
-    required this.landmark,
+    required this.landMark,
     required this.location,
     required this.productName,
     required this.productPrice,
@@ -27,40 +27,37 @@ class Step4 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextField(
-            icons: Icons.abc,
-            hinttext: 'Title',
-            label: 'Product Name',
-            error: error,
-            controller: productName,
+          commonTextField(context, productName, 'Product Name', 'Product Name',
+              Icons.abc, false, false),
+          SizedBox(
+            height: GlobalVariables.screenHeight * 0.01,
           ),
-          CustomTextField(
-            icons: Icons.place,
-            hinttext: 'Street,City',
-            label: 'Your Location',
-            error: error,
-            controller: location,
+          commonTextField(context, location, 'Street,City', 'location',
+              Icons.location_on, false, false),
+          SizedBox(
+            height: GlobalVariables.screenHeight * 0.01,
           ),
-          CustomTextField(
-            icons: Icons.location_city_outlined,
-            hinttext: 'LandMark/Goverment Offices/Schools/Parks etc',
-            label: 'Refernce Address/LandMarks',
-            error: error,
-            controller: landmark,
+          commonTextField(
+              context,
+              landMark,
+              'LandMark/Goverment Offices/Schools/Parks etc',
+              'landmark',
+              Icons.location_city_outlined,
+              false,
+              false),
+          SizedBox(
+            height: GlobalVariables.screenHeight * 0.01,
           ),
-          CustomTextField(
-            icons: Icons.contact_phone,
-            hinttext: 'Phone Number',
-            label: 'Contact Phone',
-            error: error,
-            controller: contactNumber,
+          commonTextField(context, contactNumber, 'Contact/Phone',
+              'Contact Number', Icons.phone, false, true),
+          SizedBox(
+            height: GlobalVariables.screenHeight * 0.01,
           ),
-          CustomTextField(
-              controller: productPrice,
-              hinttext: 'Expected Price',
-              label: 'Product Price',
-              icons: Icons.price_change,
-              error: error),
+          commonTextField(context, productPrice, 'Expected Price',
+              'Product Price', Icons.monetization_on, false, false),
+          SizedBox(
+            height: GlobalVariables.screenHeight * 0.01,
+          ),
         ],
       ),
     );

@@ -22,13 +22,18 @@ class _UploadPageState extends State<UploadPage> {
 //StepCounter
   int currentStep = 0;
 
-//TextEditing Controllers
-  final TextEditingController location = TextEditingController();
-  final TextEditingController contactNumber = TextEditingController();
-  final TextEditingController landmark = TextEditingController();
-  final TextEditingController productName = TextEditingController();
-  final TextEditingController productDescription = TextEditingController();
-  final TextEditingController productPrice = TextEditingController();
+//Step1
+  String? productName;
+  String? productStatus;
+  String? productCategories;
+  String? productDescription;
+//Step2
+  String? location = '';
+  String? landMark = '';
+  String? contactNumber = '';
+//step3
+  String? productPrice = '';
+
 //Error
   String error = 'is Mandatory';
 
@@ -50,18 +55,12 @@ class _UploadPageState extends State<UploadPage> {
 
     productCondition.add({"val": "1", "label": "New"});
     productCondition.add({"val": "2", "label": "Used"});
-    productCondition.add({"val": "2", "label": "Damaged(Can be Repaired)"});
+    productCondition.add({"val": "3", "label": "Damaged(Can be Repaired)"});
     super.initState();
   }
 
   @override
   void dispose() {
-    productName.dispose();
-    productDescription.dispose();
-    location.dispose();
-    contactNumber.dispose();
-    landmark.dispose();
-
     super.dispose();
   }
 
@@ -88,11 +87,12 @@ class _UploadPageState extends State<UploadPage> {
       );
     } else if (validate()) {
       setState(() {
+        print(productName);
         currentStep += 1;
       });
     } else {
       FormHelper.showSimpleAlertDialog(
-          context, 'KinMell', 'Fill Required Fileds', 'OK', () {
+          context, Config.appName, 'All Fields Are Mandatory', "ok", () {
         Navigator.of(context).pop();
       });
     }
@@ -105,47 +105,43 @@ class _UploadPageState extends State<UploadPage> {
           title: const Text('Product Details'),
           isActive: currentStep >= 0,
           content: Step1(
-            error: error,
-            productName: productName,
-            productDescription: productDescription,
             step1FormKey: step1FormKey,
             productType: productType,
             productCondition: productCondition,
+            productCategories: productCategories,
+            productDescription: productDescription,
+            productName: this.productName,
+            productStatus: productStatus,
           )),
       Step(
           state: _buildState(1),
           isActive: currentStep >= 1,
           title: const Text('Contact Address'),
           content: Step2(
-            landmark: landmark,
-            location: location,
-            contactNumber: contactNumber,
-            error: error,
-            step2FormKey: step2FormKey,
-          )),
+              landMark: landMark,
+              location: location,
+              contactNumber: contactNumber,
+              step2FormKey: step2FormKey)),
       Step(
         state: _buildState(2),
         isActive: currentStep >= 2,
         title: const Text('Pricing'),
         content: Step3(
-          error: error,
-          productPrice: productPrice,
           step3FormKey: step3FormKey,
+          productPrice: productPrice,
         ),
       ),
-      Step(
-          state: _buildState(3),
-          isActive: currentStep >= 3,
-          title: const Text('Editing And Confirmation'),
-          content: Step4(
-            contactNumber: contactNumber,
-            error: error,
-            landmark: landmark,
-            location: location,
-            productName: productName,
-            productPrice: productPrice,
-            step4FormKey: step4FormKey,
-          )),
+      // Step(
+      //     state: _buildState(3),
+      //     isActive: currentStep >= 3,
+      //     title: const Text('Editing And Confirmation'),
+      //     content: Step4(
+      //         contactNumber: contactNumber,
+      //         landMark: landMark,
+      //         location: location,
+      //         productName: productName,
+      //         productPrice: productPrice,
+      //         step4FormKey: step4FormKey)),
     ];
   }
 
@@ -172,10 +168,9 @@ class _UploadPageState extends State<UploadPage> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: BackButton(onPressed: () => movetoHomepage()),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: GestureDetector(
+        onTap: (() => FocusManager.instance.primaryFocus?.unfocus()),
+        child: ListView(
           children: [
             Stepper(
               type: StepperType.vertical,
@@ -201,7 +196,9 @@ class _UploadPageState extends State<UploadPage> {
   bool validate() {
     switch (currentStep) {
       case 0:
-        if (step1FormKey.currentState!.validate()) {
+        final form = step1FormKey.currentState;
+        if (form!.validate()) {
+          form.save();
           return true;
         } else {
           return false;
@@ -218,12 +215,12 @@ class _UploadPageState extends State<UploadPage> {
         } else {
           return false;
         }
-      case 3:
-        if (step4FormKey.currentState!.validate()) {
-          return true;
-        } else {
-          return false;
-        }
+      // case 3:
+      //   if (step4FormKey.currentState!.validate()) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
       default:
         return false;
     }

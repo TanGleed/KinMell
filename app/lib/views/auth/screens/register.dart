@@ -1,5 +1,5 @@
-import 'package:app/api/api_service.dart';
 import 'package:app/views/auth/screens/login.dart';
+import 'package:app/views/auth/services/authservices.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -258,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     password: password!,
                   );
 
-                  APIService.signup(model).then(
+                  AuthServices.signup(model).then(
                     (response) {
                       if (response.user != null) {
                         FormHelper.showSimpleAlertDialog(

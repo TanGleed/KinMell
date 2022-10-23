@@ -155,8 +155,8 @@ class NavigationDrawer extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    LoginPage.routeName, (route) => false);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/login-screen', (route) => false);
               },
             ),
           ],

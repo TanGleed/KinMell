@@ -20,49 +20,7 @@ final apiService = Provider((ref) => APIService());
 class APIService {
   static var client = http.Client();
 
-  static Future<bool?> login(LoginRequestModel model) async {
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-    };
-
-    var url = Uri.http(Config.apiURL, Config.loginAPI);
-
-    var response = await client.post(
-      url,
-      headers: requestHeaders,
-      body: jsonEncode(
-        model.toJson(),
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      await SharedService.setLoginDetails(loginResponseJson(response.body));
-      return true;
-    } else {
-      false;
-    }
-    return null;
-  }
-
-  static Future<SignupResponseModel> signup(
-    SignupRequestModel model,
-  ) async {
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-    };
-
-    var url = Uri.http(Config.apiURL, Config.signupAPI);
-
-    var response = await client.post(
-      url,
-      headers: requestHeaders,
-      body: jsonEncode(
-        model.toJson(),
-      ),
-    );
-    return signupResponseJson(response.body);
-  }
-
+//Getcatogires
   Future<List<Category>?> getCategories(page, pageSize) async {
     Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
 
