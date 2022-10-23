@@ -1,5 +1,5 @@
+import 'package:app/api/api_service.dart';
 import 'package:app/views/auth/screens/login.dart';
-import 'package:app/views/auth/services/authservices.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 child: Image.asset(
                   'assets/images/kinmell.png',
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.contain,
                   width: 150,
                 ),
               ),
@@ -139,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
               email = onSavedVal.toString().trim();
             },
             showPrefixIcon: true,
-            prefixIcon: const Icon(Icons.email),
+            prefixIcon: const Icon(Icons.email_outlined),
             borderRadius: 10,
             contentPadding: 15,
             fontSize: 14,
@@ -252,27 +252,34 @@ class _RegisterPageState extends State<RegisterPage> {
                     isAsyncCallProcess = true;
                   });
 
-                  SignupRequestModel model = SignupRequestModel(
-                    name: name!,
-                    email: email!,
-                    password: password!,
-                  );
-
-                  AuthServices.signup(model).then(
+                  APIService.signup(
+                    name!,
+                    email!,
+                    password!,
+                  ).then(
                     (response) {
-                      if (response.user != null) {
+                      setState(() {
+                        isAsyncCallProcess = false;
+                      });
+
+                      if (response) {
                         FormHelper.showSimpleAlertDialog(
                             context,
                             Config.appName,
                             "Registration Successful",
                             'OK', () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/login', (route) => false);
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            LoginPage.routeName,
+                            (route) => false,
+                          );
                         });
                       } else {
                         FormHelper.showSimpleAlertDialog(
-                            context, Config.appName, response.message, 'OK',
-                            () {
+                            context,
+                            Config.appName,
+                            "This Email already registered",
+                            'OK', () {
                           Navigator.pop(context);
                         });
                       }

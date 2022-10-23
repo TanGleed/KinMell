@@ -1,4 +1,4 @@
-const productServices = require("../services/products");
+const productServices = require("../services/product.service");
 const upload = require("../middleware/product.upload");
 
 exports.create = (req, res, next) => {

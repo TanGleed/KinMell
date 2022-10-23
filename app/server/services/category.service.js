@@ -1,5 +1,5 @@
 //const { response } = require("express");
-const { category } = require("../models/category");
+const { category } = require("../models/category.model");
 
 async function createCategory(params, callback) {
   if (!params.categoryName) {

@@ -1,5 +1,5 @@
-const { product } = require("../models/product");
-const { category } = require("../models/category");
+const { product } = require("../models/product.model");
+const { category } = require("../models/category.model");
 //const { response } = require("../app");
 
 async function createProduct(params, callback) {

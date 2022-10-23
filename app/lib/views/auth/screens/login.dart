@@ -1,6 +1,7 @@
+import 'package:app/api/api_service.dart';
 import 'package:app/models/auth/login_request_model.dart';
-import 'package:app/views/auth/services/authservices.dart';
 import 'package:app/views/auth/widgets/backtopSignupButton.dart';
+import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
@@ -174,6 +175,9 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(decoration: TextDecoration.underline),
                 )),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Center(
             child: FormHelper.submitButton("Login", () {
               if (validateAndSave()) {
@@ -182,20 +186,28 @@ class _LoginPageState extends State<LoginPage> {
                   isAsynCallProcess = true;
                 });
 
-                LoginRequestModel model = LoginRequestModel(
-                  email: email!,
-                  password: password!,
-                );
-
-                AuthServices.login(model).then(
+                APIService.login(
+                  email!,
+                  password!,
+                ).then(
                   (response) {
+                    setState(() {
+                      isAsynCallProcess = false;
+                    });
+
                     if (response!) {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/homepage-screen', (route) => false);
+                      FormHelper.showSimpleAlertDialog(context, Config.appName,
+                          "You are Logged-In Successfully", 'OK', () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          HomePage.routeName,
+                          (route) => false,
+                        );
+                      });
                     } else {
                       FormHelper.showSimpleAlertDialog(context, Config.appName,
                           "Invalid email/password", 'OK', () {
-                        Navigator.pop(context);
+                        Navigator.of(context).pop();
                       });
                     }
                   },
