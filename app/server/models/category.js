@@ -18,7 +18,7 @@ const category = mongoose.model(
       },
     },
     {
-      toJson: {
+      toJSON: {
         transform: (doc, ret) => {
           ret.categoryId = ret._id.toString();
           delete ret._id;

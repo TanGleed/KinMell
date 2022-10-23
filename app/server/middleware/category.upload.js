@@ -1,12 +1,12 @@
 const multer = require("multer");
 const path = require("path");
-//const paths = require("../upload/categories");
+//const paths = require("../uploads/categories");
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "api/uploads/categories");
+  destination: (req, file, cb) => {
+    cb(null, "./uploads/categories");
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
@@ -19,7 +19,7 @@ const fileFilter = (req, file, callback) => {
 
   const fileSize = parseInt(req.headers["content-length"]);
 
-  if (fileSize > 1048576) {
+  if (fileSize > 10485760) {
     return callback(new Error("File Size Big"));
   }
 
@@ -27,9 +27,9 @@ const fileFilter = (req, file, callback) => {
 };
 
 let upload = multer({
-  storage,
-  fileFilter,
-  fileSize: 1048576,
+  storage: storage,
+  fileFilter: fileFilter,
+  fileSize: 10485760,
 });
 
 module.exports = upload.single("categoryImage");

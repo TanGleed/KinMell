@@ -1,13 +1,17 @@
 import 'package:app/common/widgets/custom_GNav.dart';
+import 'package:app/models/categories/category.dart';
 import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/userProfile.dart';
 import 'package:app/views/home/widgets/widget_home_categories.dart';
+import 'package:app/views/home/widgets/widget_home_products.dart';
 import 'package:app/views/upload/screens/uploadPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../constants/globalvariable.dart';
+import '../../../models/product/product.dart';
 import '../widgets/post_card.dart';
+import '../widgets/product_card.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homepage-screen';
@@ -40,7 +44,13 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: ListView(
-        children: const [HomeCategoriesWidget()],
+        children: [
+          const HomeCategoriesWidget(),
+          const HomeProductsWidget(),
+          // ProductCard(
+          //   model: model,
+          // )
+        ],
       ),
 
       // body: const PostCard(

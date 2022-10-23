@@ -50,7 +50,7 @@ exports.findAll = (req, res, next) => {
 
 exports.findOne = (req, res, next) => {
   var model = {
-    categoryId: req.query.id,
+    categoryId: req.params.id,
   };
 
   categoriesService.getCategoryById(model, (error, results) => {
