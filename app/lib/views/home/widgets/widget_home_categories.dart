@@ -1,5 +1,7 @@
 import 'package:app/models/pagination.dart';
+import 'package:app/models/product/product_filter.dart';
 import 'package:app/providers.dart';
+import 'package:app/views/products/productPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +17,7 @@ class HomeCategoriesWidget extends ConsumerWidget {
         const Padding(
           padding: EdgeInsets.all(8),
           child: Text(
-            "All Categories",
+            "Categories",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -41,7 +43,7 @@ Widget _categoriesList(WidgetRef ref) {
 
   return categories.when(
     data: (list) {
-      return _buildCategoryList(list!);
+      return _buildCategoryList(list!, ref);
     },
     error: (_, __) => const Center(
       child: Text("ERR"),
@@ -52,7 +54,7 @@ Widget _categoriesList(WidgetRef ref) {
   );
 }
 
-Widget _buildCategoryList(List<Category> categories) {
+Widget _buildCategoryList(List<Category> categories, WidgetRef ref) {
   return Container(
     height: 100,
     alignment: Alignment.centerLeft,
@@ -64,7 +66,24 @@ Widget _buildCategoryList(List<Category> categories) {
         itemBuilder: (context, index) {
           var data = categories[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              ProductFilterModel filterModel = ProductFilterModel(
+                paginationModel: PaginationModel(page: 1, pageSize: 10),
+                categoryId: data.categoryId,
+              );
+
+              ref
+                  .read(productsFilterProvider.notifier)
+                  .setProductFilter(filterModel);
+
+              ref.read(productsNotifierProvider.notifier).getProducts();
+
+              Navigator.of(context)
+                  .pushNamed(ProductPage.routeName, arguments: {
+                'categoryId': data.categoryId,
+                'categoryName': data.categoryName,
+              });
+            },
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
