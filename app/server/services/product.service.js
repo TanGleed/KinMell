@@ -1,6 +1,4 @@
 const { product } = require("../models/product.model");
-const { category } = require("../models/category.model");
-//const { response } = require("../app");
 
 async function createProduct(params, callback) {
   if (!params.productName) {
@@ -15,7 +13,7 @@ async function createProduct(params, callback) {
   if (!params.category) {
     return callback(
       {
-        message: "Category Name required",
+        message: "Category required",
       },
       ""
     );
@@ -59,8 +57,9 @@ async function getProducts(params, callback) {
   product
     .find(
       condition,
-      "productId productName productShortDescription productPrice productSalePrice productImage productSKU productType stockStatus"
+      "productId productName productShortDescription productDescription productPrice productSalePrice productImage productSKU productType stockStatus createdAt updatedAt"
     )
+    .sort(params.sort)
     .populate("category", "categoryName categoryImage")
     .limit(perPage)
     .skip(perPage * page)

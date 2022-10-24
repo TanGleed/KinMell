@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:app/api/shared_service.dart';
 import 'package:app/config/config.dart';
-import 'package:app/models/auth/login_request_model.dart';
 import 'package:app/models/auth/login_response.dart';
-import 'package:app/models/auth/signup_request_model.dart';
-import 'package:app/models/auth/signup_response_model.dart';
 import 'package:app/models/product/product.dart';
 import 'package:app/models/product/product_filter.dart';
 import 'package:http/http.dart' as http;
@@ -118,6 +115,7 @@ class APIService {
     }
   }
 
+  // get products
   Future<List<Product>?> getProducts(
     ProductFilterModel productFilterModel,
   ) async {
@@ -131,6 +129,11 @@ class APIService {
     if (productFilterModel.categoryId != null) {
       queryString["categoryId"] = productFilterModel.categoryId!;
     }
+
+    if (productFilterModel.sortBy != null) {
+      queryString["sort"] = productFilterModel.sortBy!;
+    }
+
     var url = Uri.http(Config.apiURL, Config.productAPI, queryString);
 
     var response = await client.get(url, headers: requestHeaders);
