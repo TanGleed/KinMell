@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'constants/globalvariable.dart';
 import 'router.dart';
 
-Widget _defaultHome = const LoginPage();
+Widget _defaultHome = const HomePage();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
