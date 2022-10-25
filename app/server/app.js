@@ -10,10 +10,11 @@ const errors = require("./middleware/errors");
 const authRoutes = require("./routes/auth.routes");
 const categoryRoutes = require("./routes/category.routes");
 const productRoutes = require("./routes/product.routes");
+const relatedProductRoutes = require("./routes/related-product.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const host = "192.168.18.10"
+const host = "192.168.1.71";
 
 require("dotenv").config();
 
@@ -47,6 +48,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/product", productRoutes);
+app.use("/api/relatedProduct", relatedProductRoutes);
 
 //error handling middleware
 app.use(errors.errorHandler);

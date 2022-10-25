@@ -47,6 +47,12 @@ async function getProducts(params, callback) {
     condition["category"] = categoryId;
   }
 
+  if (params.productIds) {
+    condition["_id"] = {
+      $in: params.productIds.split(","),
+    };
+  }
+
   //   if (categoryId) {
   //     condition["userId"] = userId;
   //   }
@@ -61,9 +67,17 @@ async function getProducts(params, callback) {
     )
     .sort(params.sort)
     .populate("category", "categoryName categoryImage")
+    .populate("relatedProducts", "relatedProduct")
     .limit(perPage)
     .skip(perPage * page)
     .then((response) => {
+      var res = response.map((r) => {
+        if (r.relatedProducts.length > 0) {
+          r.relatedProducts = r.relatedProducts.map((x) => x.relatedProduct);
+        }
+        return r;
+      });
+
       return callback(null, response);
     })
     .catch((error) => {
@@ -77,7 +91,11 @@ async function getProductById(params, callback) {
   product
     .findById(productId)
     .populate("category", "categoryName categoryImage")
+    .populate("relatedProducts", "relatedProduct")
     .then((response) => {
+      response.relatedProducts = response.relatedProducts.map((x) => {
+        return x.relatedProduct;
+      });
       return callback(null, response);
     })
     .catch((error) => {

@@ -1,5 +1,7 @@
 import 'package:app/config/config.dart';
 import 'package:app/models/product/product.dart';
+import 'package:app/views/products/details_page.dart';
+import 'package:app/views/products/product_details_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +34,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Text(
                     "${model!.calculateDiscount}% OFF",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -41,13 +43,21 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              child: Image.network(
-                model!.fullImagePath,
-                fit: BoxFit.cover,
+            GestureDetector(
+              child: SizedBox(
+                child: Image.network(
+                  model!.fullImagePath,
+                  fit: BoxFit.cover,
+                ),
+                height: 100,
+                width: MediaQuery.of(context).size.width,
               ),
-              height: 100,
-              width: MediaQuery.of(context).size.width,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(ProductDetailsPage.routeName, arguments: {
+                  'productId': model!.productId,
+                });
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 10),
