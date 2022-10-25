@@ -1,5 +1,4 @@
 import 'package:app/common/widgets/custom_GNav.dart';
-
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/userProfile.dart';
 import 'package:app/views/home/widgets/widget_home_categories.dart';
@@ -8,7 +7,6 @@ import 'package:app/views/upload/screens/uploadPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../constants/globalvariable.dart';
-
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homepage-screen';
@@ -44,9 +42,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           const HomeCategoriesWidget(),
           const HomeProductsWidget(),
-          // ProductCard(
-          //   model: model,
-          // )
         ],
       ),
 

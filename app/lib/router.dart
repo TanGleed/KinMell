@@ -8,6 +8,7 @@ import 'package:app/views/detail/details_page.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/searchpage.dart';
+import 'package:app/views/products/productPage.dart';
 import 'package:app/views/upload/screens/uploadPage.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const RegisterPage(),
       );
+    case ProductPage.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const ProductPage());
     case HomePage.routeName:
       return MaterialPageRoute(
         builder: (_) => const HomePage(),
@@ -44,6 +48,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         builder: (_) => const Notifications(),
         settings: routeSettings,
       );
+
     case UploadPage.routeName:
       return MaterialPageRoute(
         builder: (_) => const UploadPage(),

@@ -15,6 +15,7 @@ abstract class Product with _$Product {
     required String productName,
     required Category category,
     required String productShortDescription,
+    required String productDescription,
     required double productPrice,
     required double productSalePrice,
     required String productImage,
@@ -36,7 +37,7 @@ extension ProductExt on Product {
 
     if (!productPrice.isNaN) {
       double regularPrice = productPrice;
-      double salePrice = productSalePrice > 0 ? productPrice : regularPrice;
+      double salePrice = productSalePrice > 0 ? productSalePrice : regularPrice;
 
       double discount = regularPrice - salePrice;
       disPercent = (discount / regularPrice) * 100;

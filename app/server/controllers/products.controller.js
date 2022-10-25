@@ -12,6 +12,7 @@ exports.create = (req, res, next) => {
         productName: req.body.productName,
         category: req.body.category,
         productShortDescription: req.body.productShortDescription,
+        productDescription: req.body.productDescription,
         productPrice: req.body.productPrice,
         productSalePrice: req.body.productSalePrice,
         productSKU: req.body.productSKU,
@@ -39,6 +40,7 @@ exports.findAll = (req, res, next) => {
     categoryId: req.query.categoryId,
     pageSize: req.query.pageSize,
     page: req.query.page,
+    sort: req.query.sort,
   };
 
   productServices.getProducts(model, (error, results) => {
@@ -80,6 +82,7 @@ exports.update = (req, res, next) => {
         productName: req.body.productName,
         category: req.body.category,
         productShortDescription: req.body.productShortDescription,
+        productDescription: req.body.productDescription,
         productPrice: req.body.productPrice,
         productSalePrice: req.body.productSalePrice,
         productSKU: req.body.productSKU,
