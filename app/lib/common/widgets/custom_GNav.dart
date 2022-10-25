@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:app/views/upload/screens/uploagPage.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../views/home/screens/searchpage.dart';
-import '../../views/upload/screens/uploadPage.dart';
 
 class CustomGNavBar extends StatefulWidget {
   const CustomGNavBar({
@@ -19,7 +18,7 @@ class CustomGNavBar extends StatefulWidget {
 class _CustomGNavBarState extends State<CustomGNavBar> {
   void movetoUpload() {
     Navigator.of(context)
-        .pushNamedAndRemoveUntil(UploadPage.routeName, (route) => false);
+        .pushNamedAndRemoveUntil(UploadScreen.routeName, (route) => false);
   }
 
   void movetoSearch() {

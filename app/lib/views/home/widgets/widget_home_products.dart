@@ -1,3 +1,4 @@
+import 'package:app/constants/globalvariable.dart';
 import 'package:app/models/pagination.dart';
 import 'package:app/models/product/product.dart';
 import 'package:app/models/product/product_filter.dart';
@@ -5,7 +6,6 @@ import 'package:app/providers.dart';
 import 'package:app/views/home/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../models/categories/category.dart';
 
 class HomeProductsWidget extends ConsumerWidget {
   const HomeProductsWidget({Key? key}) : super(key: key);
@@ -15,6 +15,7 @@ class HomeProductsWidget extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
+    GlobalVariables().init(context);
     List<Product> list = List<Product>.empty(growable: true);
     // list.add(Product(
     //     productName: "Nike Shoe",
@@ -39,10 +40,10 @@ class HomeProductsWidget extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(
-                  left: 16,
-                  top: 15,
+                  left: getProportionateScreenWidth(15),
+                  top: getProportionateScreenWidth(10),
                 ),
                 child: Text(
                   "Trending Products",
@@ -87,7 +88,7 @@ Widget _productsList(WidgetRef ref) {
 
 Widget _buildProductList(List<Product> products) {
   return Container(
-    height: 200,
+    height: getProportionateScreenHeight(200),
     alignment: Alignment.centerLeft,
     child: ListView.builder(
       physics: ClampingScrollPhysics(),
