@@ -50,7 +50,7 @@ class SlidingScreen extends StatelessWidget {
       return Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(right: getProportionateScreenWidth(400)),
+            padding: EdgeInsets.only(right: getProportionateScreenWidth(342)),
             child: SizedBox(
                 child: value.isStep1
                     ? IconButton(
