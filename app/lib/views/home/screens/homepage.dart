@@ -1,12 +1,15 @@
 import 'package:app/common/widgets/custom_GNav.dart';
+import 'package:app/utils/Product.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/userProfile.dart';
 import 'package:app/views/home/widgets/widget_home_categories.dart';
 import 'package:app/views/home/widgets/widget_home_products.dart';
-import 'package:app/views/upload/screens/uploadPage.dart';
+import 'package:app/views/upload/screens/uploagPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../constants/globalvariable.dart';
+import '../widgets/ProductCard.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homepage-screen';
@@ -19,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    GlobalVariables().init(context);
     return Scaffold(
       drawer: const NavigationDrawer(),
       appBar: AppBar(
@@ -42,6 +46,20 @@ class _HomePageState extends State<HomePage> {
         children: [
           const HomeCategoriesWidget(),
           const HomeProductsWidget(),
+           SizedBox(height: getProportionateScreenWidth(20)),
+          SectionTitle(),
+          SizedBox(height: getProportionateScreenWidth(20)),
+          SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ...List.generate(
+                      demoProducts.length,
+                     (index) => ProductCard(
+                      product: demoProducts[index])),
+                  ],
+                ),
+              ),
         ],
       ),
 
@@ -138,7 +156,7 @@ class NavigationDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => const UploadPage(),
+                    builder: (context) => const UploadScreen(),
                   ),
                 );
               },
@@ -154,4 +172,30 @@ class NavigationDrawer extends StatelessWidget {
           ],
         ),
       );
+}
+
+class SectionTitle extends StatelessWidget {
+  const SectionTitle({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+        GlobalVariables().init(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(18)),
+        child: Row(
+          mainAxisAlignment:MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Products",
+            style: TextStyle(fontSize: getProportionateScreenWidth(18),
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+          ),
+        );
+  }
 }
