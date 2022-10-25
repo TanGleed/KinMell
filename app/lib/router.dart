@@ -4,6 +4,7 @@ import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/auth/screens/otpscreen.dart';
 import 'package:app/views/auth/screens/register.dart';
 import 'package:app/views/auth/screens/resetPassword.dart';
+import 'package:app/views/detail/details_page.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/searchpage.dart';
@@ -31,6 +32,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case SearchPage.routeName:
       return MaterialPageRoute(
         builder: (_) => const SearchPage(),
+        settings: routeSettings,
+      );    
+      case DetailsPage.routeName:
+      return MaterialPageRoute(
+        builder: (_) => const DetailsPage(),
         settings: routeSettings,
       );
     case Notifications.routeName:

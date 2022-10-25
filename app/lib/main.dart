@@ -1,5 +1,6 @@
 import 'package:app/utils/shared_service.dart';
 import 'package:app/views/auth/screens/login.dart';
+import 'package:app/views/detail/details_page.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:app/views/upload/screens/uploadPage.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ void main() async {
   bool _result = await SharedService.isLoggedIn();
 
   if (_result) {
-    _defaultHome = const HomePage();
+    _defaultHome = const DetailsPage();
   }
 
   runApp(
