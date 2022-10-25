@@ -74,24 +74,6 @@ class APIService {
       return false;
     }
   }
-  // static Future<SignupResponseModel> signup(
-  //   SignupRequestModel model,
-  // ) async {
-  //   Map<String, String> requestHeaders = {
-  //     'Content-Type': 'application/json',
-  //   };
-
-  //   var url = Uri.http(Config.apiURL, Config.signupAPI);
-
-  //   var response = await client.post(
-  //     url,
-  //     headers: requestHeaders,
-  //     body: jsonEncode(
-  //       model.toJson(),
-  //     ),
-  //   );
-  //   return signupResponseJson(response.body);
-  // }
 
 //Getcatogires
   Future<List<Category>?> getCategories(page, pageSize) async {
@@ -134,6 +116,10 @@ class APIService {
       queryString["sort"] = productFilterModel.sortBy!;
     }
 
+    if (productFilterModel.productIds != null) {
+      queryString["productsIds"] = productFilterModel.productIds!.join(",");
+    }
+
     var url = Uri.http(Config.apiURL, Config.productAPI, queryString);
 
     var response = await client.get(url, headers: requestHeaders);
@@ -142,6 +128,21 @@ class APIService {
       var data = jsonDecode(response.body);
 
       return productFromJson(data["data"]);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Product?> getProductDetails(String productId) async {
+    Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
+
+    var url = Uri.http(Config.apiURL, "${Config.productAPI}/$productId");
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      return Product.fromJson(data["data"]);
     } else {
       return null;
     }
