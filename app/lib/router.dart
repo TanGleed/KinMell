@@ -9,7 +9,8 @@ import 'package:app/views/home/screens/homepage.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/searchpage.dart';
 import 'package:app/views/products/productPage.dart';
-import 'package:app/views/upload/screens/uploadPage.dart';
+import 'package:app/views/upload/screens/uploagPage.dart';
+
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -37,8 +38,8 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         builder: (_) => const SearchPage(),
         settings: routeSettings,
-      );    
-      case DetailsPage.routeName:
+      );
+    case DetailsPage.routeName:
       return MaterialPageRoute(
         builder: (_) => const DetailsPage(),
         settings: routeSettings,
@@ -49,9 +50,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
 
-    case UploadPage.routeName:
+    case UploadScreen.routeName:
       return MaterialPageRoute(
-        builder: (_) => const UploadPage(),
+        builder: (_) => const UploadScreen(),
         settings: routeSettings,
       );
     case ForgotPasswordScreen.routeName:

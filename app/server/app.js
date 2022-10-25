@@ -13,7 +13,7 @@ const productRoutes = require("./routes/product.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const host = "192.168.10.91";
+const host = "192.168.18.10"
 
 require("dotenv").config();
 

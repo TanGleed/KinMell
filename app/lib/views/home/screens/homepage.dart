@@ -3,7 +3,8 @@ import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/userProfile.dart';
 import 'package:app/views/home/widgets/widget_home_categories.dart';
 import 'package:app/views/home/widgets/widget_home_products.dart';
-import 'package:app/views/upload/screens/uploadPage.dart';
+import 'package:app/views/upload/screens/uploagPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../constants/globalvariable.dart';
@@ -138,7 +139,7 @@ class NavigationDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => const UploadPage(),
+                    builder: (context) => const UploadScreen(),
                   ),
                 );
               },
