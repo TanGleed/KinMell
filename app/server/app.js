@@ -7,9 +7,9 @@ const cors = require("cors");
 
 // importing local modules
 const errors = require("./middleware/errors");
-const authRoutes = require("./routes/auth");
-const categoryRoutes = require("./routes/category");
-const productRoutes = require("./routes/product");
+const authRoutes = require("./routes/auth.routes");
+const categoryRoutes = require("./routes/category.routes");
+const productRoutes = require("./routes/product.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;

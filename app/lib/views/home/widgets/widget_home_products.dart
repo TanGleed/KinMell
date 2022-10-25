@@ -3,7 +3,6 @@ import 'package:app/models/product/product.dart';
 import 'package:app/models/product/product_filter.dart';
 import 'package:app/providers.dart';
 import 'package:app/views/home/widgets/product_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../models/categories/category.dart';
@@ -46,7 +45,7 @@ class HomeProductsWidget extends ConsumerWidget {
                   top: 15,
                 ),
                 child: Text(
-                  "Top 10 Products",
+                  "Trending Products",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
