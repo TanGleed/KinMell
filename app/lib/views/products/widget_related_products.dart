@@ -1,3 +1,4 @@
+import 'package:app/constants/globalvariable.dart';
 import 'package:app/models/pagination.dart';
 import 'package:app/models/product/product.dart';
 import 'package:app/models/product/product_filter.dart';
@@ -14,6 +15,7 @@ class RelatedProductsWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
+      height: getProportionateScreenHeight(270),
       color: Colors.grey,
       child: Column(children: [
         const Text(
@@ -54,7 +56,7 @@ class RelatedProductsWidget extends ConsumerWidget {
 
   Widget _buildProductList(List<Product> products) {
     return Container(
-      height: 200,
+      height: getProportionateScreenHeight(240),
       alignment: Alignment.centerLeft,
       child: ListView.builder(
           shrinkWrap: true,

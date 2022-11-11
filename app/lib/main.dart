@@ -1,8 +1,8 @@
 import 'package:app/utils/shared_service.dart';
+import 'package:app/utils/user_preference.dart';
 import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/detail/details_page.dart';
 import 'package:app/views/home/screens/homepage.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'constants/globalvariable.dart';
@@ -12,6 +12,7 @@ Widget _defaultHome = const HomePage();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await UserPreferance.init();
   bool _result = await SharedService.isLoggedIn();
 
   if (_result) {

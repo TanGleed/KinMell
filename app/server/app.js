@@ -14,7 +14,7 @@ const relatedProductRoutes = require("./routes/related-product.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const host = "192.168.1.71";
+const host = "192.168.2.100";
 
 require("dotenv").config();
 

@@ -88,7 +88,7 @@ Widget _productsList(WidgetRef ref) {
 
 Widget _buildProductList(List<Product> products) {
   return Container(
-    height: getProportionateScreenHeight(200),
+    height: GlobalVariables.screenHeight * 0.29,
     alignment: Alignment.centerLeft,
     child: ListView.builder(
       physics: ClampingScrollPhysics(),

@@ -1,4 +1,5 @@
 import 'package:app/config/config.dart';
+import 'package:app/constants/globalvariable.dart';
 import 'package:app/models/product/product.dart';
 import 'package:app/views/products/details_page.dart';
 import 'package:app/views/products/product_details_page.dart';
@@ -12,7 +13,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
+      width: GlobalVariables.screenWidth * 0.35,
       decoration: const BoxDecoration(color: Colors.white),
       margin: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -60,7 +61,9 @@ class ProductCard extends StatelessWidget {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10),
+              padding: EdgeInsets.only(
+                  top: getProportionateScreenHeight(10),
+                  left: getProportionateScreenWidth(10)),
               child: Text(
                 model!.productName,
                 textAlign: TextAlign.left,

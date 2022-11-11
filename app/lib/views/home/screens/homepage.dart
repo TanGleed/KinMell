@@ -46,20 +46,18 @@ class _HomePageState extends State<HomePage> {
         children: [
           const HomeCategoriesWidget(),
           const HomeProductsWidget(),
-           SizedBox(height: getProportionateScreenWidth(20)),
+          SizedBox(height: getProportionateScreenWidth(20)),
           SectionTitle(),
           SizedBox(height: getProportionateScreenWidth(20)),
           SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ...List.generate(
-                      demoProducts.length,
-                     (index) => ProductCard(
-                      product: demoProducts[index])),
-                  ],
-                ),
-              ),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                ...List.generate(demoProducts.length,
+                    (index) => ProductCard(product: demoProducts[index])),
+              ],
+            ),
+          ),
         ],
       ),
 
@@ -153,12 +151,7 @@ class NavigationDrawer extends StatelessWidget {
               leading: const Icon(Icons.upload_rounded),
               title: const Text('Upload'),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const UploadScreen(),
-                  ),
-                );
+                Navigator.pushNamed(context, '/uploadpage-screen');
               },
             ),
             ListTile(
@@ -181,21 +174,23 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        GlobalVariables().init(context);
+    GlobalVariables().init(context);
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: getProportionateScreenWidth(18)),
-        child: Row(
-          mainAxisAlignment:MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Products",
-            style: TextStyle(fontSize: getProportionateScreenWidth(18),
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(18)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Products",
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(18),
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              ),
             ),
-          ],
           ),
-        );
+        ],
+      ),
+    );
   }
 }
