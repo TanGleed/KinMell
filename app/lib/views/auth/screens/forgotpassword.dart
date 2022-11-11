@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app/api/api_service.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/views/auth/screens/otpscreen.dart';

@@ -1,4 +1,5 @@
 import 'package:app/config/config.dart';
+import 'package:app/constants/globalvariable.dart';
 import 'package:app/models/product/product.dart';
 import 'package:app/providers.dart';
 import 'package:app/views/home/widgets/widget_col_exp.dart';
@@ -46,8 +47,6 @@ class _ProductDetailsPageState extends ConsumerState<ProductDetailsPage> {
     return details.when(
       data: (model) {
         return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _productDetailsUI(model!),
             RelatedProductsWidget(model.relatedProducts!),
@@ -69,16 +68,16 @@ class _ProductDetailsPageState extends ConsumerState<ProductDetailsPage> {
   Widget _productDetailsUI(Product model) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Positioned(
-            left: 70,
-            right: 70,
+            left: getProportionateScreenWidth(70),
+            right: getProportionateScreenWidth(70),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(context).size.width * 1,
               height: 300,
               child: Image.network(
                 model.fullImagePath,
@@ -86,11 +85,14 @@ class _ProductDetailsPageState extends ConsumerState<ProductDetailsPage> {
               ),
             ),
           ),
+          SizedBox(
+            height: getProportionateScreenWidth(5),
+          ),
           Positioned(
-            top: 350,
+            top: getProportionateScreenHeight(800),
             child: Container(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.only(top: 10),
+              width: MediaQuery.of(context).size.width * 1,
               height: 700,
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 202, 202, 209),
@@ -103,7 +105,7 @@ class _ProductDetailsPageState extends ConsumerState<ProductDetailsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Column(
                         children: [
@@ -295,8 +297,8 @@ class _ProductDetailsPageState extends ConsumerState<ProductDetailsPage> {
                         padding: const EdgeInsets.only(
                             left: 8, right: 15, bottom: 18),
                         child: SizedBox(
-                          width: 80,
-                          height: 50,
+                          width: getProportionateScreenWidth(80),
+                          height: getProportionateScreenHeight(50),
                           child: ElevatedButton(
                             onPressed: () {},
                             child: const Icon(
@@ -325,8 +327,8 @@ class _ProductDetailsPageState extends ConsumerState<ProductDetailsPage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 10, bottom: 15),
                         child: SizedBox(
-                          width: 150,
-                          height: 50,
+                          width: getProportionateScreenWidth(150),
+                          height: getProportionateScreenHeight(50),
                           child: TextButton.icon(
                             onPressed: () {},
                             icon: const Icon(
