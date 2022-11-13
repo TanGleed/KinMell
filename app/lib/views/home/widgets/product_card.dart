@@ -6,126 +6,151 @@ import 'package:app/views/products/product_details_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProductCard extends StatelessWidget {
+Color _favIconColor = Colors.black;
+
+class ProductCard extends StatefulWidget {
   final Product? model;
   const ProductCard({Key? key, this.model}) : super(key: key);
 
   @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: GlobalVariables.screenWidth * 0.35,
-      decoration: const BoxDecoration(color: Colors.white),
-      margin: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
-      ),
-      child: Stack(children: [
-        Column(
+    return Padding(
+      padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+      child: SizedBox(
+        width: getProportionateScreenWidth(150),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Visibility(
-              visible: model!.calculateDiscount > 0,
-              child: Align(
-                alignment: Alignment.topLeft,
+            Stack(children: [
+              AspectRatio(
+                aspectRatio: 1.1,
                 child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                    color: Colors.green,
+                  padding: EdgeInsets.all(getProportionateScreenWidth(0)),
+                  decoration: BoxDecoration(
+                    color: GlobalVariables.secondaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text(
-                    "${model!.calculateDiscount}% OFF",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(ProductDetailsPage.routeName, arguments: {
+                        'productId': widget.model!.productId,
+                      });
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        widget.model!.fullImagePath,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            GestureDetector(
-              child: SizedBox(
-                child: Image.network(
-                  model!.fullImagePath,
-                  fit: BoxFit.cover,
-                ),
-                height: 100,
-                width: MediaQuery.of(context).size.width,
-              ),
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(ProductDetailsPage.routeName, arguments: {
-                  'productId': model!.productId,
-                });
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: getProportionateScreenHeight(10),
-                  left: getProportionateScreenWidth(10)),
-              child: Text(
-                model!.productName,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: Row(
-                      children: [
-                        Text(
-                          "${Config.currency}${model!.productPrice.toString()}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: model!.calculateDiscount > 0
-                                ? Colors.red
-                                : Colors.black,
-                            fontWeight: FontWeight.bold,
-                            decoration: model!.productSalePrice > 0
-                                ? TextDecoration.lineThrough
-                                : null,
-                          ),
-                        ),
-                        Text(
-                          (model!.calculateDiscount > 0)
-                              ? " ${model!.productSalePrice.toString()}"
-                              : "",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+              Visibility(
+                visible: widget.model!.calculateDiscount > 0,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(3)),
+                      color: Colors.green,
+                    ),
+                    child: Text(
+                      "${widget.model!.calculateDiscount}% OFF",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                  GestureDetector(
-                    child: const Icon(
-                      Icons.favorite,
-                      color: Colors.grey,
-                      size: 20,
-                    ),
-                    onTap: () {},
-                  )
-                ],
+                ),
               ),
-            )
+            ]),
+            const SizedBox(height: 5),
+            Text(
+              widget.model!.productName,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: getProportionateScreenWidth(15),
+                color: Colors.black,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  "${Config.currency}${widget.model!.productPrice.toString()}",
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(15),
+                    fontWeight: FontWeight.w600,
+                    color: widget.model!.calculateDiscount > 0
+                        ? Colors.red
+                        : Colors.black,
+                    decoration: widget.model!.productSalePrice > 0
+                        ? TextDecoration.lineThrough
+                        : null,
+                  ),
+                ),
+                Text(
+                  (widget.model!.calculateDiscount > 0)
+                      ? " ${widget.model!.productSalePrice.toString()}"
+                      : "",
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(15),
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                IconButton(
+                  iconSize: 15,
+                  icon: Icon(Icons.favorite_outlined),
+                  onPressed: () {
+                    setState(() {
+                      if (_favIconColor == Colors.black) {
+                        _favIconColor = Colors.red;
+                        //widget.product.isFavourite=true;
+
+                      } else {
+                        _favIconColor = Colors.black;
+                        // widget.product.isFavourite=false;
+                      }
+                    });
+                  },
+                  color: _favIconColor,
+                )
+              ],
+            ),
           ],
         ),
-      ]),
+      ),
     );
   }
 }
+
+
+
+
+//  GestureDetector(
+//                 child: SizedBox(
+//                   child: Image.network(
+//                     widget.model!.fullImagePath,
+//                     fit: BoxFit.cover,
+//                   ),
+//                   height: GlobalVariables.screenHeight * 0.12,
+//                   width: MediaQuery.of(context).size.width,
+//                 ),
+//                 onTap: () {
+//                   Navigator.of(context)
+//                       .pushNamed(ProductDetailsPage.routeName, arguments: {
+//                     'productId': widget.model!.productId,
+//                   });
+//                 },
+//               ),
