@@ -1,3 +1,4 @@
+import 'package:app/api/api_service.dart';
 import 'package:app/config/config.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/models/product/product.dart';

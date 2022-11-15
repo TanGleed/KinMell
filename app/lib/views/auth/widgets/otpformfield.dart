@@ -1,9 +1,20 @@
+import 'package:app/api/api_service.dart';
+import 'package:app/config/config.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/utils/keyboard.dart';
+import 'package:app/views/auth/screens/resetPassword.dart';
 import 'package:flutter/material.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
+import 'package:snippet_coder_utils/ProgressHUD.dart';
 
 class OTPForm extends StatefulWidget {
-  const OTPForm({super.key});
+  final String? email;
+  final String? hash;
+  const OTPForm({
+    required this.email,
+    required this.hash,
+    super.key,
+  });
 
   @override
   State<OTPForm> createState() => _OTPFormState();
@@ -73,10 +84,22 @@ class _OTPFormState extends State<OTPForm> {
               backgroundColor: Colors.blue,
             ),
             onPressed: () {
-              //checkopt
-
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/resetPassword-screen', (route) => false);
+              APIService.otpVerify(widget.email!, widget.hash!, pin)
+                  .then((response) {
+                if (response["data"] != "Invalid OTP") {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const ResetPassword()),
+                      (route) => false);
+                } else {
+                  FormHelper.showSimpleAlertDialog(context, Config.appName,
+                      response["error"].toString(), 'OK', () {
+                    Navigator.pushNamed(context, '/forgotpassword-screen');
+                  });
+                }
+              });
             },
             child: Text(
               'Continue',

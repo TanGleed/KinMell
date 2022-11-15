@@ -24,6 +24,33 @@ exports.login = (req, res, next) => {
   });
 };
 
+exports.sendOtp=(req,res,next)=>{
+  
+  authServices.createOtp(req.body,(error,result)=>
+  {
+    if(error)
+    {
+      return next(error);
+    }
+    return res.status(200).send({
+      message: "Success",
+  data: result})
+  });
+};
+exports.verifyOtp=(req,res,next)=>{
+  
+  authServices.verifyOtp(req.body,(error,result)=>
+  {
+    if(error)
+    {
+      
+      return next(error);
+    }
+    return res.status(200).send({
+      message: "Success",
+  data: result})
+  });
+}
 // exports.user_delete = async (req, res, next) => {
 //   await User.remove({ _id: req.params.userId })
 //     .exec()

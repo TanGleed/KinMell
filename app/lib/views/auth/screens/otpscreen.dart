@@ -12,8 +12,11 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 class OtpScreen extends StatefulWidget {
   static const String routeName = '/otp-screen';
   final String? email;
+  final String? hash;
+
   const OtpScreen({
     required this.email,
+    required this.hash,
     super.key,
   });
 
@@ -26,6 +29,30 @@ class _OtpScreenState extends State<OtpScreen> {
   static bool isTimerRunning = true;
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+      ),
+      body: body(),
+    );
+  }
+
+  SizedBox body() {
+    return SizedBox(
+      width: double.infinity,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: SafeArea(
+            child: otpFormScreen(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column otpFormScreen() {
     return Column(
       children: [
         SizedBox(
@@ -66,7 +93,7 @@ class _OtpScreenState extends State<OtpScreen> {
           height: GlobalVariables.screenHeight * 0.05,
         ),
         isTimerRunning ? showtime() : Container(),
-        const OTPForm(),
+        OTPForm(email: widget.email, hash: widget.hash),
         SizedBox(
           height: GlobalVariables.screenHeight * 0.1,
         ),
