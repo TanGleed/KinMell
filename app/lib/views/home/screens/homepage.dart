@@ -2,6 +2,7 @@ import 'package:app/common/widgets/custom_GNav.dart';
 import 'package:app/utils/Product.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/userProfile.dart';
+import 'package:app/views/home/widgets/List_of_products.dart';
 import 'package:app/views/home/widgets/widget_home_categories.dart';
 import 'package:app/views/home/widgets/widget_home_products.dart';
 import 'package:app/views/upload/screens/uploagPage.dart';
@@ -46,18 +47,15 @@ class _HomePageState extends State<HomePage> {
         children: [
           const HomeCategoriesWidget(),
           const HomeProductsWidget(),
-          SizedBox(height: getProportionateScreenWidth(20)),
-          SectionTitle(),
-          SizedBox(height: getProportionateScreenWidth(20)),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                ...List.generate(demoProducts.length,
-                    (index) => ProductCard(product: demoProducts[index])),
-              ],
-            ),
+          SizedBox(height: getProportionateScreenWidth(10)),
+          SectionTitle(
+            name: 'Stationary',
           ),
+          SizedBox(height: getProportionateScreenWidth(10)),
+          const ListOfProducts(),
+          SectionTitle(name: 'Clothing'),
+          SizedBox(height: getProportionateScreenWidth(10)),
+          const ListOfProducts(),
         ],
       ),
 
@@ -170,7 +168,9 @@ class NavigationDrawer extends StatelessWidget {
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
     Key? key,
+    required this.name,
   }) : super(key: key);
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +182,7 @@ class SectionTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Products",
+            "$name",
             style: TextStyle(
               fontSize: getProportionateScreenWidth(18),
               color: Colors.black,

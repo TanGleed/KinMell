@@ -19,7 +19,11 @@ const { config } = require("dotenv");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+<<<<<<< HEAD
 const host = "192.168.0.13";
+=======
+const host = "192.168.31.130";
+>>>>>>> 4bc03518efc7c35c4bc561b0d9ad7e501f715a8b
 
 require("dotenv").config();
 
