@@ -26,7 +26,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   static bool isValidEmail = false;
   static bool isAsynccall = false;
   static final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  String? email;
+  String email = '';
   @override
   void initState() {
     super.initState();
@@ -57,11 +57,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(20)),
-            child: isValidEmail
-                ? OtpScreen(
-                    email: email,
-                  )
-                : emailFormScreen()),
+            child: emailFormScreen()),
       ),
     );
   }
@@ -98,7 +94,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               setState(() {
                 isAsynccall = true;
               });
-              //api logic goes here
+
+              APIService.otpSend(email).then((response) {
+                setState(() {
+                  isAsynccall = false;
+                });
+
+                if (response != null) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => OtpScreen(
+                          email: email,
+                          hash: response.data,
+                        ),
+                      ));
+                }
+              });
               if (true) {
                 setState(() {
                   isValidEmail = true;

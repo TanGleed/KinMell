@@ -1,15 +1,11 @@
+import 'package:app/api/api_service.dart';
 import 'package:app/constants/globalvariable.dart';
-import 'package:app/views/home/screens/homepage.dart';
 import 'package:app/views/upload/services/uploadModal.dart';
-import 'package:app/views/upload/widgets/contactAddress._Form.dart';
 import 'package:app/views/upload/widgets/productDetails.dart';
-
 import 'package:app/views/upload/widgets/productImages.dart';
 import 'package:app/views/upload/widgets/productPricing_Filed.dart';
 import 'package:app/views/upload/widgets/circularProgress.dart';
-
 import 'package:flutter/material.dart';
-import 'package:im_stepper/stepper.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -48,7 +44,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     moveStepBack(value);
                   },
                   icon: const Icon(Icons.arrow_back_ios_new_rounded)),
-              title: Center(child: const Text('Upload Product')),
+              title: const Center(child: Text('Upload Product')),
             ),
             resizeToAvoidBottomInset: false,
             body: Align(alignment: Alignment.topLeft, child: Steps()),
@@ -67,6 +63,7 @@ class Steps extends StatefulWidget {
 }
 
 class _StepsState extends State<Steps> {
+  APIService api = APIService();
   List<Widget> pageList = [
     const ProductImages(),
     const ProductDetails(),

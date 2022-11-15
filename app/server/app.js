@@ -3,22 +3,31 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+
 const cors = require("cors");
 
-// importing local modules
+
+
+
+//importing local modules
 const errors = require("./middleware/errors");
 const authRoutes = require("./routes/auth.routes");
 const categoryRoutes = require("./routes/category.routes");
 const productRoutes = require("./routes/product.routes");
 const relatedProductRoutes = require("./routes/related-product.routes");
+const { config } = require("dotenv");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+<<<<<<< HEAD
+const host = "192.168.0.13";
+=======
 const host = "192.168.31.130";
+>>>>>>> 4bc03518efc7c35c4bc561b0d9ad7e501f715a8b
 
 require("dotenv").config();
 
-// connecting to mongoDB
+//connecting to mongoDB
 mongoose.Promise = global.Promise;
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -31,12 +40,15 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+//Nodemailer stuff
+
+
 
 // automatic default logging middleware
 app.use(morgan("common"));
 
-// body parsing middleware
-// app.use(bodyParser.urlencoded({ extended: false }));
+//body parsing middleware
+//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // middleware

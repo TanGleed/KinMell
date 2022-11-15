@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:app/api/shared_service.dart';
 import 'package:app/config/config.dart';
 import 'package:app/models/auth/login_response.dart';
+import 'package:app/models/auth/otp_response_model.dart';
 import 'package:app/models/product/product.dart';
 import 'package:app/models/product/product_filter.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/categories/category.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,6 +75,43 @@ class APIService {
     } else {
       return false;
     }
+  }
+
+//getOTP
+  static Future<OtpResponseModel> otpSend(String email) async {
+    Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
+    var url = Uri.http(Config.apiURL, Config.sendotpAPI);
+    var response = await client.post(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode(
+        {"email": email},
+      ),
+    );
+    return otpResponseJSON(response.body);
+  }
+
+//verifyotp
+  static Future<dynamic> otpVerify(
+    String email,
+    String otpHash,
+    String otpCode,
+  ) async {
+    Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
+    var url = Uri.http(Config.apiURL, Config.verifyotpAPI);
+    var response = await client.post(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode(
+        {
+          "email": email,
+          "otp": otpCode,
+          "hash": otpHash,
+        },
+      ),
+    );
+
+    return (jsonDecode(response.body));
   }
 
 //Getcatogires

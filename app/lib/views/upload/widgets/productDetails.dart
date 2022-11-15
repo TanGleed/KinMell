@@ -1,9 +1,10 @@
+import 'package:app/api/api_service.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/utils/keyboard.dart';
 import 'package:app/views/upload/services/uploadModal.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/providers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
+import 'package:app/models/pagination.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -138,6 +139,46 @@ class _ProductDetailsState extends State<ProductDetails> {
                   onChange: (val) {
                     value.location = val;
                   },
+                ),
+                SizedBox(
+                  height: GlobalVariables.screenHeight * 0.02,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
+                    height: getProportionateScreenHeight(50),
+                    width: GlobalVariables.screenWidth,
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(20),
+                    //   color: Colors.grey.shade200,
+                    // ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Product Unit',
+                                style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const Text(
+                                'Number of items',
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: GlobalVariables.screenHeight * 0.02,
