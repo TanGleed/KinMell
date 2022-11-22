@@ -81,7 +81,6 @@ async function createOtp(params,callback)
     auth:
     {
       user: "sudipbhattarai806@gmail.com",
-      pass: "wdbupzqqaqvnxevp"
   
     }
   });
