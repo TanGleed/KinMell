@@ -6,6 +6,7 @@ import 'package:app/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:app/models/pagination.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -27,6 +28,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     UploadModal.productCondition.add({"val": "2", "label": "Used"});
     UploadModal.productCondition
         .add({"val": "3", "label": "Damaged(Can be Repaired)"});
+    UploadModal.productColors.add({"val": "1", "label": "Red"});
+    UploadModal.productColors.add({"val": "2", "label": "Black"});
+    UploadModal.productColors.add({"val": "3", "label": "White"});
+    UploadModal.productColors.add({"val": "4", "label": "Blue"});
     super.initState();
   }
 
@@ -35,6 +40,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     // TODO: implement dispose
     UploadModal.productCategories.clear();
     UploadModal.productCondition.clear();
+    UploadModal.productColors.clear();
     super.dispose();
   }
 
@@ -55,7 +61,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 FormHelper.dropDownWidget(
                   context,
                   'Select Category *',
-                  value.prodcutCat,
+                  value.productCat,
                   UploadModal.productCategories,
                   (onValidate) {
                     if (onValidate!.isEmpty) {
@@ -64,7 +70,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     return '*Required';
                   },
                   (onChanged) {
-                    value.prodcutCat = onChanged!;
+                    value.productCat = onChanged!;
                   },
                   showPrefixIcon: true,
                   prefixIcon: const Icon(Icons.category_sharp),
@@ -158,16 +164,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
+                            children: const [
+                              Text(
                                 'Product Unit',
                                 style: TextStyle(
                                     color: Colors.black87,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold),
                               ),
-                              const Text(
-                                'Number of items',
+                              Text(
+                                'Slide to change product unit',
                                 style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 10,
@@ -175,10 +181,54 @@ class _ProductDetailsState extends State<ProductDetails> {
                               )
                             ],
                           ),
+                          const Spacer(),
+                          NumberPicker(
+                              textStyle: const TextStyle(color: Colors.black),
+                              itemHeight: getProportionateScreenHeight(20),
+                              itemWidth: getProportionateScreenWidth(100),
+                              itemCount: 1,
+                              selectedTextStyle:
+                                  const TextStyle(color: Colors.black),
+                              axis: Axis.horizontal,
+                              minValue: 1,
+                              maxValue: 50,
+                              value: value.productunit,
+                              onChanged: ((unit) {
+                                value.productunit = unit;
+                                setState(() {});
+                              }))
                         ],
                       ),
                     ),
                   ),
+                ),
+                SizedBox(height: GlobalVariables.screenHeight * 0.028),
+                FormHelper.dropDownWidget(
+                  context,
+                  'Select Color *',
+                  value.productColor,
+                  UploadModal.productColors,
+                  (onValidate) {
+                    if (onValidate!.isEmpty) {
+                      return '*Required';
+                    }
+                    return '*Required';
+                  },
+                  (onChanged) {
+                    value.productColor = onChanged!;
+                  },
+                  showPrefixIcon: true,
+                  prefixIcon: const Icon(Icons.category_sharp),
+                  prefixIconPaddingLeft: 10,
+                  prefixIconColor: Colors.black,
+                  borderRadius: 10,
+                  hintFontSize: 14,
+                  hintColor: Colors.black.withOpacity(0.6),
+                  contentPadding: 15,
+                  borderColor: Colors.grey.shade400,
+                  borderFocusColor: Colors.grey.shade200,
+                  optionValue: "val",
+                  optionLabel: "label",
                 ),
                 SizedBox(
                   height: GlobalVariables.screenHeight * 0.02,
@@ -214,7 +264,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     backgroundColor: Colors.grey.shade100,
                     borderFocusColor: Colors.grey.shade200,
                     onChange: (val) {
-                      value.productDescription = val;
+                      value.productColor = val;
                     },
                   ),
                 ),

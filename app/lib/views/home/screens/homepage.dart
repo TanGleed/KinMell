@@ -1,4 +1,5 @@
 import 'package:app/common/widgets/custom_GNav.dart';
+import 'package:app/config/config.dart';
 import 'package:app/utils/Product.dart';
 import 'package:app/views/home/screens/notification.dart';
 import 'package:app/views/home/screens/userProfile.dart';
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          'Kathmandu',
+          Config.appName,
           style: Theme.of(context).textTheme.subtitle1,
         ),
         actions: [

@@ -52,9 +52,7 @@ class _ProductPricingDetailsState extends State<ProductPricingDetails> {
             borderFocusColor: Colors.grey.shade200,
             isNumeric: true,
             onChange: (val) {
-              setState(() {
-                modal.productPrice = val;
-              });
+              modal.productPrice = val;
             },
           ),
           SizedBox(

@@ -8,12 +8,14 @@ enum Pricingtype { Negotiable, Non_Negotiable }
 
 class UploadModal extends ChangeNotifier {
   String? productName = '';
-  String? prodcutCat = '';
+  String? productCat = '';
   String? productStat = '';
   String? location = '';
   String? contactNumber = '';
   String? productDescription = '';
   String? productPrice = '';
+  int productunit = 1;
+  String? productColor = '';
   String currentStep = 'Upload Images';
   String nextStep = 'Next Step: Product Details';
   GlobalKey<FormState> step1key = GlobalKey<FormState>();
@@ -27,6 +29,7 @@ class UploadModal extends ChangeNotifier {
   //DropDown List
   static List<dynamic> productCategories = [];
   static List<dynamic> productCondition = [];
+  static List<dynamic> productColors = [];
   Pricingtype? pricingtype;
 
   //StepsInidicator
@@ -72,7 +75,8 @@ class UploadModal extends ChangeNotifier {
       case 1:
         if (step2key.currentState!.validate() &&
             productStat!.isNotEmpty &&
-            prodcutCat!.isNotEmpty) {
+            productCat!.isNotEmpty &&
+            productColor!.isNotEmpty) {
           step2key.currentState!.save();
           return true;
         } else {
