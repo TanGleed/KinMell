@@ -64,7 +64,7 @@ async function createOtp(params,callback)
       specialChars: false
     }
   );
-  const ttl= 5*60*1000;
+  //const ttl= 5*60*1000;
   //const expires =Date.now()+ ttl;
   const data =params.email+otp;
   const hash=crypto.createHmac("sha256",key).update(data).digest("hex");
@@ -80,8 +80,8 @@ async function createOtp(params,callback)
   
     auth:
     {
-      user: "sudipbhattarai806@gmail.com",
-  
+      user: "sudipbhattarai1792@gmail.com",
+      pass: "zajwdrqaczoptebd",
     }
   });
   

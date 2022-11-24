@@ -3,16 +3,21 @@ import 'package:app/config/config.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/utils/keyboard.dart';
 import 'package:app/views/auth/screens/resetPassword.dart';
+import 'package:app/views/auth/services/singupprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
+import '../screens/login.dart';
+
 class OTPForm extends StatefulWidget {
-  final String? email;
   final String? hash;
+  final bool isregisterScreen;
+  final SignUpModal value;
   const OTPForm({
-    required this.email,
+    required this.value,
     required this.hash,
+    required this.isregisterScreen,
     super.key,
   });
 
@@ -26,6 +31,7 @@ class _OTPFormState extends State<OTPForm> {
   FocusNode? pin3FocusNode;
   FocusNode? pin4FocusNode;
   String pin = '';
+  bool isAsyncCallProcess = false;
   @override
   void initState() {
     super.initState();
@@ -74,42 +80,95 @@ class _OTPFormState extends State<OTPForm> {
         SizedBox(
           height: GlobalVariables.screenHeight * 0.15,
         ),
-        SizedBox(
-          width: double.infinity,
-          height: getProportionateScreenHeight(56),
-          child: TextButton(
-            style: TextButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              backgroundColor: Colors.blue,
-            ),
-            onPressed: () {
-              APIService.otpVerify(widget.email!, widget.hash!, pin)
-                  .then((response) {
-                if (response["data"] != "Invalid OTP") {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const ResetPassword()),
-                      (route) => false);
-                } else {
-                  FormHelper.showSimpleAlertDialog(context, Config.appName,
-                      response["error"].toString(), 'OK', () {
-                    Navigator.pushNamed(context, '/forgotpassword-screen');
-                  });
-                }
-              });
-            },
-            child: Text(
-              'Continue',
-              style: TextStyle(
-                fontSize: getProportionateScreenWidth(18),
-                color: Colors.white,
+        isAsyncCallProcess
+            ? SizedBox(
+                width: double.infinity,
+                height: getProportionateScreenHeight(56),
+                child: ProgressHUD(
+                  key: UniqueKey(),
+                  inAsyncCall: isAsyncCallProcess,
+                  child: Container(),
+                ))
+            : SizedBox(
+                width: double.infinity,
+                height: getProportionateScreenHeight(56),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    backgroundColor: Colors.blue,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isAsyncCallProcess = true;
+                    });
+                    APIService.otpVerify(widget.value.email!, widget.hash!, pin)
+                        .then((response) {
+                      if (response["data"] != "Invalid OTP") {
+                        widget.isregisterScreen
+                            ? APIService.signup(
+                                widget.value.name!,
+                                widget.value.email!,
+                                widget.value.password!,
+                              ).then(
+                                (response) {
+                                  setState(() {
+                                    isAsyncCallProcess = false;
+                                  });
+
+                                  if (response) {
+                                    FormHelper.showSimpleAlertDialog(
+                                        context,
+                                        Config.appName,
+                                        "Registration Successful",
+                                        'OK', () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(
+                                        LoginPage.routeName,
+                                        (route) => false,
+                                      );
+                                    });
+                                  } else {
+                                    FormHelper.showSimpleAlertDialog(
+                                        context,
+                                        Config.appName,
+                                        "This Email already registered",
+                                        'OK', () {
+                                      Navigator.pop(context);
+                                    });
+                                  }
+                                },
+                              )
+                            : Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        const ResetPassword()),
+                                (route) => false);
+                      } else {
+                        FormHelper.showSimpleAlertDialog(
+                            context,
+                            Config.appName,
+                            "OTP Verification Failed",
+                            'OK', () {
+                          setState(() {
+                            isAsyncCallProcess = false;
+                          });
+                          Navigator.pop(context);
+                        });
+                      }
+                    });
+                  },
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(18),
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
       ],
     );
   }

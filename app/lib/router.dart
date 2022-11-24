@@ -57,12 +57,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         builder: (_) => const UploadScreen(),
         settings: routeSettings,
       );
-    case ForgotPasswordScreen.routeName:
-      return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(
-                isValidEmail: false,
-              ),
-          settings: routeSettings);
+
     case ResetPassword.routeName:
       return MaterialPageRoute(
           builder: (_) => const ResetPassword(), settings: routeSettings);
