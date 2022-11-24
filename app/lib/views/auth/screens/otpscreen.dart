@@ -1,21 +1,19 @@
-import 'package:app/config/config.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/utils/keyboard.dart';
-import 'package:app/views/auth/screens/forgotpassword.dart';
-import 'package:app/views/auth/screens/login.dart';
 import 'package:app/views/auth/widgets/otpformfield.dart';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
+import '../services/singupprovider.dart';
 
 class OtpScreen extends StatefulWidget {
   static const String routeName = '/otp-screen';
-  final String? email;
+  final bool isregisterScreen;
   final String? hash;
+  final SignUpModal modal;
 
   const OtpScreen({
-    required this.email,
+    required this.isregisterScreen,
+    required this.modal,
     required this.hash,
     super.key,
   });
@@ -77,7 +75,7 @@ class _OtpScreenState extends State<OtpScreen> {
             children: <TextSpan>[
               const TextSpan(text: "OTP sent to "),
               TextSpan(
-                text: widget.email,
+                text: widget.modal.email,
                 style: const TextStyle(
                   color: Colors.purple,
                   fontWeight: FontWeight.bold,
@@ -93,7 +91,11 @@ class _OtpScreenState extends State<OtpScreen> {
           height: GlobalVariables.screenHeight * 0.05,
         ),
         isTimerRunning ? showtime() : Container(),
-        OTPForm(email: widget.email, hash: widget.hash),
+        OTPForm(
+          value: widget.modal,
+          hash: widget.hash,
+          isregisterScreen: widget.isregisterScreen,
+        ),
         SizedBox(
           height: GlobalVariables.screenHeight * 0.1,
         ),

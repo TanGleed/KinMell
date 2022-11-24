@@ -1,5 +1,5 @@
 import 'package:app/api/api_service.dart';
-import 'package:app/models/auth/login_request_model.dart';
+import 'package:app/views/auth/screens/forgotpassword.dart';
 import 'package:app/views/auth/widgets/backtopSignupButton.dart';
 import 'package:app/views/home/screens/homepage.dart';
 import 'package:flutter/material.dart';
@@ -168,8 +168,13 @@ class _LoginPageState extends State<LoginPage> {
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.65),
             child: GestureDetector(
-                onTap: (() =>
-                    Navigator.pushNamed(context, '/forgotpassword-screen')),
+                onTap: (() => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ForgotPasswordScreen(
+                        isValidEmail: true,
+                      ),
+                    ))),
                 child: const Text(
                   'Forgot Password?',
                   style: TextStyle(decoration: TextDecoration.underline),
@@ -196,14 +201,10 @@ class _LoginPageState extends State<LoginPage> {
                     });
 
                     if (response!) {
-                      FormHelper.showSimpleAlertDialog(context, Config.appName,
-                          "You are Logged-In Successfully", 'OK', () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          HomePage.routeName,
-                          (route) => false,
-                        );
-                      });
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        HomePage.routeName,
+                        (route) => false,
+                      );
                     } else {
                       FormHelper.showSimpleAlertDialog(context, Config.appName,
                           "Invalid email/password", 'OK', () {

@@ -1,17 +1,16 @@
 import 'package:app/api/api_service.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/views/auth/screens/otpscreen.dart';
+import 'package:app/views/auth/services/singupprovider.dart';
 import 'package:app/views/auth/widgets/backtopSignupButton.dart';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
-import '../../../config/config.dart';
-
 class ForgotPasswordScreen extends StatefulWidget {
   static const String routeName = '/forgotpassword-screen';
+
   final bool isValidEmail;
   const ForgotPasswordScreen({
     required this.isValidEmail,
@@ -36,34 +35,41 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     GlobalVariables().init(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-      ),
-      body: SafeArea(
-        child: ProgressHUD(
-            inAsyncCall: isAsynccall,
-            key: UniqueKey(),
-            opacity: 0.3,
-            child: Form(key: globalKey, child: Body())),
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => SignUpModal(),
+      child: Consumer<SignUpModal>(builder: ((context, value, child) {
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0.0,
+          ),
+          body: SafeArea(
+            child: ProgressHUD(
+                inAsyncCall: isAsynccall,
+                key: UniqueKey(),
+                opacity: 0.3,
+                child: Form(key: globalKey, child: Body())),
+          ),
+        );
+      })),
     );
   }
 
-  SizedBox Body() {
-    return SizedBox(
-      width: double.infinity,
-      child: SingleChildScrollView(
-        child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: emailFormScreen()),
-      ),
-    );
+  Consumer Body() {
+    return Consumer<SignUpModal>(builder: ((context, value, child) {
+      return SizedBox(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
+              child: emailFormScreen(value)),
+        ),
+      );
+    }));
   }
 
 //*******************Enter Email Screen**************
-  Column emailFormScreen() {
+  Column emailFormScreen(SignUpModal value) {
     return Column(
       children: [
         SizedBox(
@@ -83,7 +89,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         SizedBox(
           height: GlobalVariables.screenHeight * 0.05,
         ),
-        emailFormField(),
+        emailFormField(value),
         SizedBox(
           height: GlobalVariables.screenHeight * 0.01,
         ),
@@ -95,7 +101,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 isAsynccall = true;
               });
 
-              APIService.otpSend(email).then((response) {
+              APIService.otpSend(value.email!).then((response) {
                 setState(() {
                   isAsynccall = false;
                 });
@@ -105,8 +111,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (_) => OtpScreen(
-                          email: email,
+                          modal: value,
                           hash: response.data,
+                          isregisterScreen: false,
                         ),
                       ));
                 }
@@ -116,12 +123,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   isValidEmail = true;
                   isAsynccall = false;
                 });
-              } else {
-                FormHelper.showSimpleAlertDialog(
-                    context, Config.appName, "Invalid email", 'OK', () {
-                  Navigator.pop(context);
-                });
-              }
+              } else {}
             }
           },
               btnColor: Colors.deepPurple,
@@ -138,7 +140,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
 //**********************Creates Email Field*******************
-  Container emailFormField() {
+  Container emailFormField(SignUpModal value) {
     return Container(
       child: FormHelper.inputFieldWidget(
         context,
@@ -158,7 +160,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           return null;
         },
         (onSaved) {
-          email = onSaved.toString().trim();
+          value.email = onSaved.toString().trim();
         },
         showPrefixIcon: true,
         prefixIcon: const Icon(Icons.email_outlined),
