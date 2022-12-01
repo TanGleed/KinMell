@@ -3,12 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-
 const cors = require("cors");
-
-
-
-
 //importing local modules
 const errors = require("./middleware/errors");
 const authRoutes = require("./routes/auth.routes");
@@ -16,7 +11,6 @@ const categoryRoutes = require("./routes/category.routes");
 const productRoutes = require("./routes/product.routes");
 const relatedProductRoutes = require("./routes/related-product.routes");
 const { config } = require("dotenv");
-
 const app = express();
 const PORT = process.env.PORT || 4000;
 const host = "0.0.0.0";
@@ -64,5 +58,6 @@ app.use(errors.errorHandler);
 app.listen(PORT, host, () => {
   console.log(`server is running at http://${host}:${PORT}`);
 });
+
 
 module.exports = app;

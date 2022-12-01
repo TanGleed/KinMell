@@ -58,10 +58,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
 
-    case ResetPassword.routeName:
-      return MaterialPageRoute(
-          builder: (_) => const ResetPassword(), settings: routeSettings);
-
     default:
       return MaterialPageRoute(
         settings: routeSettings,

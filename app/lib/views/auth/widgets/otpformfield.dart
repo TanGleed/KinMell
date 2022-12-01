@@ -144,7 +144,9 @@ class _OTPFormState extends State<OTPForm> {
                                 context,
                                 MaterialPageRoute<void>(
                                     builder: (BuildContext context) =>
-                                        const ResetPassword()),
+                                        ResetPassword(
+                                          modal: widget.value,
+                                        )),
                                 (route) => false);
                       } else {
                         FormHelper.showSimpleAlertDialog(
