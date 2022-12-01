@@ -1,13 +1,16 @@
+import 'package:app/api/api_service.dart';
 import 'package:app/config/config.dart';
 import 'package:app/constants/globalvariable.dart';
+import 'package:app/views/auth/services/singupprovider.dart';
 import 'package:app/views/auth/widgets/backtopSignupButton.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
 class ResetPassword extends StatefulWidget {
+  final SignUpModal modal;
   static const String routeName = '/resetPassword-screen';
-  const ResetPassword({super.key});
+  const ResetPassword({required this.modal, super.key});
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -71,25 +74,36 @@ class _ResetPasswordState extends State<ResetPassword> {
                     setState(() {
                       isAsynccall = true;
                     });
-                    //api logic goes here
-                    if (true) {
-                      setState(() {
-                        isAsynccall = false;
-                        FormHelper.showSimpleAlertDialog(
-                            context,
-                            Config.appName,
-                            "Password Reset Successfully\nyou will be directed to login",
-                            'OK', () {
-                          Navigator.of(context)
-                              .popAndPushNamed('/login-screen');
+
+                    APIService.reset(
+                      widget.modal.email!,
+                      confirmnewPassword!,
+                    ).then(
+                      (response) {
+                        setState(() {
+                          isAsynccall = false;
                         });
-                      });
-                    } else {
-                      FormHelper.showSimpleAlertDialog(
-                          context, Config.appName, "Invalid email", 'OK', () {
-                        Navigator.pop(context);
-                      });
-                    }
+
+                        if (response) {
+                          FormHelper.showSimpleAlertDialog(
+                              context,
+                              Config.appName,
+                              "Password Reset Successfully\nyou will be directed to login",
+                              'OK', () {
+                            Navigator.of(context)
+                                .popAndPushNamed('/login-screen');
+                          });
+                        } else {
+                          FormHelper.showSimpleAlertDialog(
+                              context,
+                              Config.appName,
+                              "Invalid email/password",
+                              'OK', () {
+                            Navigator.of(context).pop();
+                          });
+                        }
+                      },
+                    );
                   }
                 },
                     btnColor: Colors.deepPurple,

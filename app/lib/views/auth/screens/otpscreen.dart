@@ -1,3 +1,4 @@
+import 'package:app/api/api_service.dart';
 import 'package:app/constants/globalvariable.dart';
 import 'package:app/utils/keyboard.dart';
 import 'package:app/views/auth/widgets/otpformfield.dart';
@@ -115,6 +116,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
+                            APIService.otpSend(widget.modal.email!);
                             setState(() {
                               showResendOTP = false;
                               isTimerRunning = true;
