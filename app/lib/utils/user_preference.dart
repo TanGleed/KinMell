@@ -11,6 +11,8 @@ class UserPreferance {
     imgPath: 'assets/images/Old Sterio.jpeg',
     name: 'Prabesh',
     email: 'prabesht09@gmail.com',
+    contact: '9800000000',
+    location: 'Dhulikhel, Kavre',
     about:
         'Here goes some description of the user. Like location, phone number whatever that helps the buyer connect with the user.',
     isDarkMode: false,

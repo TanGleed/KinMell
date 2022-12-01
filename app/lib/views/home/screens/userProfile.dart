@@ -54,6 +54,16 @@ Widget buildName(User_Profile user) => Column(
           user.email,
           style: TextStyle(fontSize: 16),
         ),
+        const SizedBox(height: 4),
+        Text(
+          user.contact,
+          style: TextStyle(fontSize: 16),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          user.location,
+          style: TextStyle(fontSize: 16),
+        ),
       ],
     );
 
