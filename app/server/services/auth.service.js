@@ -62,7 +62,6 @@ async function createOtp(params, callback) {
       specialChars: false
     }
   );
-
   //const ttl= 5*60*1000;
   //const expires =Date.now()+ ttl;
   const data = params.email + otp;
@@ -117,15 +116,12 @@ async function createOtp(params, callback) {
                                         <td style="padding:0 35px;">
                                             <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">You have
                                                 requested to verify your mail</h1>
-                                            <p
-                                                style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;">${otp}
-                                            </p>
+                                            <span
+                                                style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;">${otp}</span>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                 We have send you OTP(One Time Passowrd). Please Enter the OTP and proceed futher 
                                             </p>
-                                            <a href="javascript:void(0);"
-                                                style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">
-                                                </a>
+                                          
                                         </td>
                                     </tr>
                                     <tr>
@@ -138,6 +134,7 @@ async function createOtp(params, callback) {
                         </tr>
                         <tr>
                             <td style="text-align:center;">
+                                <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; <strong>KinMell</strong></p>
                             </td>
                         </tr>
                         <tr>

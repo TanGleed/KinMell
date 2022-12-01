@@ -75,12 +75,3 @@ exports.reset = (req, res, next) => {
 //       });
 //     });
 // };
-// exports.reset => (password, email) {
-//   // const User = await user.findOne({ email });
-//   const password = bcrypt.hash(password);
-//   const updated = await user.findOneAndUpdate(
-//     {
-//       email: email,
-//     },
-//     { password: password });
-// }
